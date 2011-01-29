@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>ALES - the Akihabara Level Editor &amp; Sharer</title>
+
+  <!-- <link rel="stylesheet" href="css/jquery-ui.css"> -->
+
+  <script type="text/javascript" src="lib/first.js"></script>
+  <script type="text/javascript" src="lib/ba-debug.js"></script>
+  <script type="text/javascript" src="lib/config.js"></script>
+  <script type="text/javascript" src="lib/head.js"></script>
+</head>
+<body>
+  <div id="container"></div>
+<script>
+  head.js('lib/underscore.js',
+    { jquery: 'lib/jquery/jquery-1.4.4.js' },
+    'lib/klass.js',
+    { bbq: 'lib/jquery/jquery.ba-bbq.js' },
+    'lib/core.js',
+    'lib/extensions/date_time.js',
+    'lib/level.js',
+    'lib/jquery/jquery-ui.js',
+    'lib/showdown.js',
+    'lib/jquery/jquery.showdown.js',
+    'lib/jquery/jquery.tmpl.js',
+    'lib/tutorials/tutorial.js',
+    'lib/tutorials/tutorial_manager.js',
+    'lib/tutorials/jquery.tutorials.js',
+    'lib/jquery-ui/jquery.ui.tutorial.js',
+    'lib/jquery-ui/jquery.ui.toolbox.js',
+    'lib/jquery/jquery.tools_tooltips.min.js',
+    'lib/akiba.js',
+    'akihabara/gbox.js',
+    'akihabara/iphopad.js',
+    'akihabara/trigo.js',
+    'akihabara/toys.js',
+    'akihabara/help.js',
+    'akihabara/tool.js',
+    { akihabara: 'akihabara/gamecycle.js' },
+    'lib/overrides.js',
+    'lib/player.js',
+    'lib/enemy.js',
+    'lib/actors/top_down.js',
+    'lib/actors/aki_player.js',
+    'games/test/init.js',
+    { game: 'lib/game.js' },
+    'lib/levels/map.js'
+  );
+
+  head.ready('jquery', function() {
+    console.log('hullo');
+  });
+
+  head.ready('bbq', function() {
+    urlParams = $.deparam.querystring();
+  });
+
+  function getURLParam(name) {
+    return urlParams[name];
+  }
+
+  head.ready(function() {
+    urlParams = $.deparam.querystring();
+    currentLevel = new Level();
+
+    levelParam = getURLParam('level');
+    levelParam && currentLevel.generateMapFromString(levelParam);
+
+    the_game = new $games[getURLParam('game') || $config.default_game]();
+    the_game.start && the_game.start();
+    the_game.level = currentLevel.map;
+  });
+</script>
+</body></html>

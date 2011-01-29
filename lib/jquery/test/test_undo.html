@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html> 
+<head> 
+	<title>Darren's Undo with jQuery</title> 
+</head>
+<body>
+  <script type="text/javascript" src="../../../lib/jquery/jquery-1.4.4.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery.tmpl.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery.klass.js"></script>
+  <script type="text/javascript" src="../../../lib/jquery/jquery.undoable.js"></script>
+  <script type="text/javascript" src="../../../akihabara/gbox.js"></script>
+  <script type="text/javascript" src="../../../akihabara/iphopad.js"></script>
+  <script type="text/javascript" src="../../../akihabara/trigo.js"></script>
+  <script type="text/javascript" src="../../../akihabara/toys.js"></script>
+  <script type="text/javascript" src="../../../akihabara/help.js"></script>
+  <script type="text/javascript" src="../../../akihabara/tool.js"></script>
+  <script type="text/javascript" src="../../../akihabara/gamecycle.js"></script>
+  <script type="text/javascript" src="../../../lib/core.js"></script>
+  <script type="text/javascript" src="../../../lib/levels/map.js"></script>
+  <script type="text/javascript" src="../../../lib/admin/init.js"></script>
+
+  <input name="" value="start"></input>
+<script>
+var UpdateValue = UndoableAction.extend({
+  init: function(value, options) {
+    var self = this;
+    self.value = value;
+
+    this._super(function() {
+      self.oldValue = UpdateValue.priorOldValue;
+      loadValue(self.value);
+      UpdateValue.priorOldValue = self.value;
+    }, function() {
+      loadValue(self.oldValue);
+      UpdateValue.priorOldValue = self.oldValue;
+    });
+
+    self.redo();
+  }
+});
+
+jQuery(function(){
+  $().enableUndo({ redoCtrlChar : 'y', redoShiftReq : false });
+});
+
+UpdateValue.priorOldValue = $('input').val();
+
+function loadValue(val) {
+  $('input').attr('value', val);
+}
+
+$('input').change(function() {
+  new UpdateValue(this.value);
+});
+
+</script>
+</body>
+</html>
