@@ -2,6 +2,8 @@ var ALESTest = Klass.extend({
   init: function() {
     debug.log('Starting ALES Test game...');
 
+    this.frameCount = 0;
+
     // This initializes Akihabara with the default settings.
     // The title (which appears in the browser title bar) is the text we're passing to the function.
 
