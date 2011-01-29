@@ -12,6 +12,13 @@
 </head>
 <body>
   <div id="container"></div>
+  <textarea id="level_1_csv">
+    <!-- Past the CSV data here -->
+    Hello
+  </textarea>
+  <textarea id="level_2_csv">
+    <!-- Past the CSV data here -->
+  </textarea>
 <script>
   head.js('lib/underscore.js',
     { jquery: 'lib/jquery/jquery-1.4.4.js' },
@@ -50,7 +57,13 @@
   );
 
   head.ready('jquery', function() {
-
+    // An example of getting the raw CSV string from the textarea
+    // var level_1_csv_text = $('#level_1_csv').text();
+    // console.log(level_1_csv_text);
+    // var lines = level_1_csv_text.split("\n")
+    // _(lines).each(function(line) {
+      // var data = line.split(',')
+    // })
   });
 
   head.ready('bbq', function() {
