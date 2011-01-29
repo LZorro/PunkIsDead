@@ -11,6 +11,15 @@ var ALESTest = Klass.extend({
 
     gbox.addBundle({ file: 'bundle.js?' + timestamp() });
 
+    $aki.controls.watchKeys({
+      B: function() {
+        console.log('B pressed');
+      },
+      C: function() {
+        console.log('C pressed');
+      }
+    });
+
     // The 'main' function is registered as a callback: this just says that when we're done with loadAll we should call 'main'
     gbox.setCallback(main);
 
