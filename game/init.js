@@ -20,8 +20,8 @@ var ALESTest = Klass.extend({
       },
       C: function() {
         console.log('C pressed');
-      },
- 	  D: function() {
+      }//,
+ /*	  D: function() {
 		console.log('D was: ' + isMusicOn);
 		isMusicOn = !isMusicOn;
 		if (isMusicOn)
@@ -30,7 +30,7 @@ var ALESTest = Klass.extend({
 		else
 		  //gbox.stopAudio('bgmix');
 		  gbox.setAudioMute('bggtr');
-	  } 
+	  } */
     });
 
     // The 'main' function is registered as a callback: this just says that when we're done with loadAll we should call 'main'
