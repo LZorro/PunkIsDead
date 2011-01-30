@@ -45,7 +45,7 @@ function makeFoe(character_name, params) {
   var aki = new_foe.getAkiObject();
   aki.animList = {
     normal: { speed: 8, frames: [0, 1] },
-    hurt:   { speed: 8, frames: [2]    }
+    hurt:   { speed: 8, frames: [2]    },
     punk:   { speed: 8, frames: [3]    }
   }
   aki.animIndex = 'hurt';
