@@ -17,7 +17,7 @@ function getImageResources(){
       ['fight_background_1',    'images/battlescreens/poserbs.png'],
       ['fight_background_2',    'images/battlescreens/dmannbs.png'],
       ['fight_background_3',    'images/battlescreens/teenybs.png'],
-      ['screen_splash',        'images/splash.png'],
+      ['screen_splash',        'images/titlescreen.png'],
       ['screen_tutorial',      'images/tutorial.png'],
       ['screen_win',           'images/win.png'],
       ['screen_lose',          'images/lose.png'],
@@ -144,6 +144,24 @@ function getTileResources(){
     {
       id:      'fight_background_1',
       image:   'fight_background_1',
+      tilew:   640,
+      tileh:   480,
+      tilerow: 1,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'fight_background_2',
+      image:   'fight_background_2',
+      tilew:   640,
+      tileh:   480,
+      tilerow: 1,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'fight_background_3',
+      image:   'fight_background_3',
       tilew:   640,
       tileh:   480,
       tilerow: 1,

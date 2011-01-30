@@ -5,7 +5,7 @@ var Screen = Klass.extend({
     this.game = the_game;
     this.aki_attributes = _.extend({
       group:   'fights',
-      tileset: 'fight_background_1'
+      tileset: 'fight_background_3'
     }, options.aki_attributes || {});
 
     this.id = this.aki_attributes.id;
