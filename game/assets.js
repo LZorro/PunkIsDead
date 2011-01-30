@@ -14,11 +14,17 @@ function getImageResources(){
       ['enemy_dot',            'images/enemy_dot.png'],
       ['block_sprite',         'images/block_sprite.png'],
       ['city_background',      'images/city_background.png'],
-      ['fight_background',     'images/poserbs.png'],
+      ['fight_background_1',    'images/battlescreens/poserbs.png'],
+      ['fight_background_2',    'images/battlescreens/dmannbs.png'],
+      ['fight_background_3',    'images/battlescreens/teenybs.png'],
       ['screen_splash',        'images/splash.png'],
       ['screen_tutorial',      'images/tutorial.png'],
       ['screen_win',           'images/win.png'],
       ['screen_lose',          'images/lose.png'],
+      ['button_c',             'images/buttons/button_c.png'],
+      ['button_v',             'images/buttons/button_v.png'],
+      ['button_x',             'images/buttons/button_x.png'],
+      ['button_z',             'images/buttons/button_z.png'],
       ['background_tilesheet', 'images/bg1.png']
     ];
   if($config.use_plugins){
@@ -137,7 +143,7 @@ function getTileResources(){
     },
     {
       id:      'fight_background_1',
-      image:   'fight_background',
+      image:   'fight_background_1',
       tilew:   640,
       tileh:   480,
       tilerow: 1,
@@ -176,6 +182,42 @@ function getTileResources(){
       image:   'screen_lose',
       tilew:   640,
       tileh:   480,
+      tilerow: 1,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'button_c',
+      image:   'button_c',
+      tilew:   32,
+      tileh:   32,
+      tilerow: 1,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'button_v',
+      image:   'button_v',
+      tilew:   32,
+      tileh:   32,
+      tilerow: 1,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'button_x',
+      image:   'button_x',
+      tilew:   32,
+      tileh:   32,
+      tilerow: 1,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'button_z',
+      image:   'button_z',
+      tilew:   32,
+      tileh:   32,
       tilerow: 1,
       gapx:    0,
       gapy:    0

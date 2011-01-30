@@ -51,12 +51,27 @@ function makeFoe(character_name, params) {
   }
   aki.animIndex = 'normal';
 
+  new_foe.startBattle = function() {
+    aki.in_battle = true;
+
+    spawnButton('z', { aki_attributes: { id: 'button_z1', x: 100, y: 335 } });
+    spawnButton('x', { aki_attributes: { id: 'button_x1', x: 100, y: 365 } }, 300);
+    spawnButton('c', { aki_attributes: { id: 'button_c1', x: 100, y: 395 } }, 600);
+    spawnButton('v', { aki_attributes: { id: 'button_v1', x: 100, y: 425 } }, 1400);
+
+    spawnButton('z', { aki_attributes: { id: 'button_v1', x: 100, y: 425 } }, 2000);
+    spawnButton('x', { aki_attributes: { id: 'button_v1', x: 100, y: 425 } }, 2400);
+
+    gbox.playAudio('bgmix', 'bgmix');
+    gbox.playAudio('bggtr', 'bggtr');
+  }
+
   aki.otherAnimationUpdates = function() {
     if (gbox.getObject("player","player_id") && gbox.objectIsVisible(the_game.player) && gbox.objectIsVisible(this) && gbox.collides(the_game.player, this, 1)) {
       if (the_game.player.initialized) {
         if (!this.in_battle) {
           the_game.startBattle();
-          this.in_battle = true;
+          new_foe.startBattle();
         }
         this.animIndex = 'hurt';
       }
