@@ -107,6 +107,7 @@
     'lib/actors/aki_player.js',
     'lib/actors/platform_person.js',
     'game/init.js',
+    'game/assets.js',
     { game: 'lib/game.js' },
     'lib/levels/map.js'
   );
@@ -122,8 +123,6 @@
 		level_data.push(line.split(','));
     });
   });
-  console.log(level_data);
-
 
   head.ready('bbq', function() {
     urlParams = $.deparam.querystring();
