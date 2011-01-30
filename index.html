@@ -13,9 +13,57 @@
 <body>
   <div id="container"></div>
   <textarea id="level_1_csv" style="display: none">
-    <!-- Past the CSV data here -->
-    Hello
-  </textarea>
+18,z
+18.5,z
+19,v
+19.5,x
+20,v
+21,c
+34,x
+34.5,x
+35,z
+35.5,c
+36,v
+36.5,v
+37,x
+37.5,v
+38,v
+39,c
+40,x
+40.5,z
+41,v
+51.25,v
+52,x
+54,x
+55,c
+56,x
+57,v
+66,v
+66.5,x
+68,c
+68.5,z
+70,x
+70.5,c
+72,c
+72.5,c
+73,x
+73.5,z
+74.5,x
+75,c
+75.5,c
+76,v
+76.5,v
+77,v
+77.5,v
+78,v
+78.5,v
+79,v
+79.5,v
+80,v
+80.5,v
+81,v
+81.5,v
+82,z</textarea>
   <textarea id="level_2_csv" style="display: none">
     <!-- Past the CSV data here -->
   </textarea>
@@ -56,15 +104,19 @@
     'lib/levels/map.js'
   );
 
+  var level_1_csv_text;
+  var lines;
+  var level_data = new Array();
   head.ready('jquery', function() {
     // An example of getting the raw CSV string from the textarea
-    // var level_1_csv_text = $('#level_1_csv').text();
-    // console.log(level_1_csv_text);
-    // var lines = level_1_csv_text.split("\n")
-    // _(lines).each(function(line) {
-      // var data = line.split(',')
-    // })
+    level_1_csv_text = $('#level_1_csv').text();
+    lines = level_1_csv_text.split("\n");
+    _(lines).each(function(line) {
+		level_data.push(line.split(','));
+    });
   });
+  console.log(level_data);
+
 
   head.ready('bbq', function() {
     urlParams = $.deparam.querystring();
