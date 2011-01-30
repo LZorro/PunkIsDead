@@ -8,12 +8,16 @@ function getImageResources(){
       ['player_sprite',        'images/walk.png'],
       ['map_spritesheet',      'images/map_pieces.png'],
       ['enemy_sprite',         'images/enemy_sprite.png'],
-      ['enemy_sprite1',        'images/enemy_sprite1.png'],
+      ['enemy_sprite1',        timestampedURL('images/enemy_sprite1.png')],
       ['enemy_sprite2',        'images/enemy_sprite2.png'],
       ['enemy_sprite3',        'images/enemy_sprite3.png'],
       ['enemy_dot',            'images/enemy_dot.png'],
       ['block_sprite',         'images/block_sprite.png'],
       ['city_background',      'images/city_background.png'],
+      ['fight_background',     'images/poserbattlescreen.jpg'],
+      ['screen_splash',        'images/splash.png'],
+      ['screen_win',           'images/win.png'],
+      ['screen_lose',          'images/lose.png'],
       ['background_tilesheet', 'images/bg1.png']
     ];
   if($config.use_plugins){
@@ -72,7 +76,7 @@ function getTileResources(){
       image:   'enemy_sprite1',
       tileh:   64,
       tilew:   32,
-      tilerow: 2,
+      tilerow: 5,
       gapx:    0,
       gapy:    0
     },
@@ -81,7 +85,7 @@ function getTileResources(){
       image:   'enemy_sprite1',
       tileh:   64,
       tilew:   32,
-      tilerow: 2,
+      tilerow: 5,
       gapx:    0,
       gapy:    0
     },
@@ -90,7 +94,7 @@ function getTileResources(){
       image:   'enemy_sprite2',
       tileh:   64,
       tilew:   32,
-      tilerow: 2,
+      tilerow: 5,
       gapx:    0,
       gapy:    0
     },
@@ -99,7 +103,7 @@ function getTileResources(){
       image:   'enemy_sprite3',
       tileh:   64,
       tilew:   32,
-      tilerow: 2,
+      tilerow: 5,
       gapx:    0,
       gapy:    0
     },
@@ -127,6 +131,24 @@ function getTileResources(){
       tileh:   96,
       tilew:   96,
       tilerow: 14,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'fight_background_1',
+      image:   'fight_background',
+      tilew:   640,
+      tileh:   480,
+      tilerow: 1,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'intro_screen',
+      image:   'screen_splash',
+      tilew:   640,
+      tileh:   480,
+      tilerow: 1,
       gapx:    0,
       gapy:    0
     }
