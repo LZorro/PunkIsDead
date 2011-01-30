@@ -74,6 +74,32 @@ var ALESTest = Klass.extend({
       }
     }
 
+    // Fight screen
+    the_game.fight_screen_3 = new Screen({ aki_attributes: {
+      id:      'joe_fight',
+      tileset: 'fight_background_2'
+    }});
+    var fight_aki_3 = the_game.fight_screen_3.getAkiObject();
+    gbox.addObject(fight_aki_3);
+    fight_aki_3.blit = function() {
+      if (g_foes.joe.aki_obj.in_battle) {
+        akiba.magic.standard_blit.call(fight_aki_3);
+      }
+    }
+
+    // Fight screen
+    the_game.fight_screen_2 = new Screen({ aki_attributes: {
+      id:      'chris_fight',
+      tileset: 'fight_background_1'
+    }});
+    var fight_aki_2 = the_game.fight_screen_2.getAkiObject();
+    gbox.addObject(fight_aki_2);
+    fight_aki_2.blit = function() {
+      if (g_foes.chris.aki_obj.in_battle) {
+        akiba.magic.standard_blit.call(fight_aki_2);
+      }
+    }
+
     // Intro screen
     the_game.intro_screen = new Screen({ aki_attributes: {
       id:      'intro_screen',
