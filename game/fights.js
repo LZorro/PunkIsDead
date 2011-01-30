@@ -12,7 +12,7 @@ var Screen = Klass.extend({
   },
 
   getAkiObject: function() {
-    var obj = _(akiba.actors.top_down_object).extend(this.aki_attributes);
+    var obj = _(_(akiba.actors.top_down_object).clone()).extend(this.aki_attributes);
 
     this.aki_obj = obj;
     return obj;

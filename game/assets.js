@@ -16,6 +16,7 @@ function getImageResources(){
       ['city_background',      'images/city_background.png'],
       ['fight_background',     'images/poserbs.png'],
       ['screen_splash',        'images/splash.png'],
+      ['screen_tutorial',      'images/tutorial.png'],
       ['screen_win',           'images/win.png'],
       ['screen_lose',          'images/lose.png'],
       ['background_tilesheet', 'images/bg1.png']
@@ -146,6 +147,33 @@ function getTileResources(){
     {
       id:      'intro_screen',
       image:   'screen_splash',
+      tilew:   640,
+      tileh:   480,
+      tilerow: 1,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'tutorial_screen',
+      image:   'screen_tutorial',
+      tilew:   640,
+      tileh:   480,
+      tilerow: 1,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'win_screen',
+      image:   'screen_win',
+      tilew:   640,
+      tileh:   480,
+      tilerow: 1,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'lose_screen',
+      image:   'screen_lose',
       tilew:   640,
       tileh:   480,
       tilerow: 1,

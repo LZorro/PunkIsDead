@@ -22,11 +22,19 @@ var ALESTest = Klass.extend({
         debug.log('C pressed');
         battle_system.input('c');
       },
-      Z: function() {
-        console.log('hi');
+      SPACE: function() {
         if (g_screen === 'intro') {
+          g_screen = 'tutorial';
+        } else if (g_screen === 'tutorial') {
           g_screen = null;
         }
+      },
+      W: function() {
+        console.log("W");
+        the_game.win();
+      },
+      L: function() {
+        the_game.lose();
       }
     });
 
@@ -60,20 +68,72 @@ var ALESTest = Klass.extend({
 
     // Intro screen
     the_game.intro_screen = new Screen({ aki_attributes: {
+      id:      'intro_screen',
       group:   'fights',
       tileset: 'intro_screen'
     }});
     var aki = the_game.intro_screen.getAkiObject();
+
     aki.blit = function() {
       if (g_screen === 'intro') {
-        akiba.magic.standard_blit.apply(aki);
+        akiba.magic.standard_blit.call(aki);
       }
     }
     gbox.addObject(aki);
+
+    // Tutorials screen
+    the_game.tutorial_screen = new Screen({ aki_attributes: {
+      id:      'tutorial_screen',
+      group:   'fights',
+      tileset: 'tutorial_screen'
+    }});
+    var aki_2 = the_game.tutorial_screen.getAkiObject();
+    aki_2.blit = function() {
+      if (g_screen === 'tutorial') {
+        akiba.magic.standard_blit.call(aki_2);
+      }
+    }
+    gbox.addObject(aki_2);
+
+    // Win screen
+    the_game.win_screen = new Screen({ aki_attributes: {
+      id:      'win_screen',
+      group:   'fights',
+      tileset: 'win_screen'
+    }});
+    var aki_3 = the_game.win_screen.getAkiObject();
+    aki_3.blit = function() {
+      if (g_screen === 'win') {
+        akiba.magic.standard_blit.call(aki_3);
+      }
+    }
+    gbox.addObject(aki_3);
+
+    // Lose screen
+    the_game.lose_screen = new Screen({ aki_attributes: {
+      id:      'lose_screen',
+      group:   'fights',
+      tileset: 'lose_screen'
+    }});
+    var aki_4 = the_game.lose_screen.getAkiObject();
+    aki_4.blit = function() {
+      if (g_screen === 'lose') {
+        akiba.magic.standard_blit.call(aki_4);
+      }
+    }
+    gbox.addObject(aki_4);
   },
 
   startBattle: function() {
     console.log('Battle started!');
     this.player.startBattle();
+  },
+
+  win: function() {
+    g_screen = 'win';
+  },
+  
+  lose: function() {
+    g_screen = 'lose';
   }
 });
