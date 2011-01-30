@@ -8,7 +8,7 @@ function getImageResources(){
       ['player_sprite',        'images/walk.png'],
       ['map_spritesheet',      'images/map_pieces.png'],
       ['enemy_sprite',         'images/enemy_sprite.png'],
-      ['enemy_sprite1',        'images/enemy_sprite1.png'],
+      ['enemy_sprite1',        timestampedURL('images/enemy_sprite1.png')],
       ['enemy_sprite2',        'images/enemy_sprite2.png'],
       ['enemy_sprite3',        'images/enemy_sprite3.png'],
       ['enemy_dot',            'images/enemy_dot.png'],
@@ -72,7 +72,7 @@ function getTileResources(){
       image:   'enemy_sprite1',
       tileh:   64,
       tilew:   32,
-      tilerow: 2,
+      tilerow: 5,
       gapx:    0,
       gapy:    0
     },
@@ -81,7 +81,7 @@ function getTileResources(){
       image:   'enemy_sprite1',
       tileh:   64,
       tilew:   32,
-      tilerow: 2,
+      tilerow: 5,
       gapx:    0,
       gapy:    0
     },
@@ -90,7 +90,7 @@ function getTileResources(){
       image:   'enemy_sprite2',
       tileh:   64,
       tilew:   32,
-      tilerow: 2,
+      tilerow: 5,
       gapx:    0,
       gapy:    0
     },
@@ -99,7 +99,7 @@ function getTileResources(){
       image:   'enemy_sprite3',
       tileh:   64,
       tilew:   32,
-      tilerow: 2,
+      tilerow: 5,
       gapx:    0,
       gapy:    0
     },

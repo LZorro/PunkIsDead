@@ -44,5 +44,15 @@ var ALESTest = Klass.extend({
 
   defaultPlugins: function() {
     return 'plugins/defaultPlugins.json';
+  },
+
+  startGame: function() {
+    addPlayer();
+
+    addMap();
+
+    makeFoe('sarah', { x: 200, y: 256 });
+    makeFoe('chris', { x: 300, y: 256 });
+    makeFoe('joe',   { x: 400, y: 256 });
   }
 });
