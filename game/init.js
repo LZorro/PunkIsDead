@@ -19,19 +19,23 @@ var ALESTest = Klass.extend({
         console.log('B pressed');
       },
       C: function() {
-        console.log('C pressed');
-		battle_system.input('c');
-      }//,
- /*    D: function() {
-    console.log('D was: ' + isMusicOn);
-    isMusicOn = !isMusicOn;
-    if (isMusicOn)
-      //gbox.playAudio('bgmix', 'bgmix');
-      gbox.setAudioUnmute('bggtr');
-    else
-      //gbox.stopAudio('bgmix');
-      gbox.setAudioMute('bggtr');
-    } */
+        debug.log('C pressed');
+        battle_system.input('c');
+      },
+      SPACE: function() {
+        if (g_screen === 'intro') {
+          g_screen = 'tutorial';
+        } else if (g_screen === 'tutorial') {
+          g_screen = null;
+        }
+      },
+      W: function() {
+        console.log("W");
+        the_game.win();
+      },
+      L: function() {
+        the_game.lose();
+      }
     });
 
     // The 'main' function is registered as a callback: this just says that when we're done with loadAll we should call 'main'
@@ -58,52 +62,87 @@ var ALESTest = Klass.extend({
     makeFoe('chris', { x: 300, y: 256 });
     makeFoe('joe',   { x: 400, y: 256 });
 
-    the_game.fight_screen = new Screen();
-    gbox.addObject(the_game.fight_screen.getAkiObject());
+    // Fight screen
+    the_game.fight_screen = new Screen({ aki_attributes: {
+      id:      'sarah_fight',
+    }});
+    var fight_aki = the_game.fight_screen.getAkiObject();
+    gbox.addObject(fight_aki);
 
+    fight_aki.blit = function() {
+      if (g_foes.sarah.aki_obj.in_battle) {
+        akiba.magic.standard_blit.call(fight_aki);
+      }
+    }
+
+    // Intro screen
     the_game.intro_screen = new Screen({ aki_attributes: {
+      id:      'intro_screen',
       group:   'fights',
       tileset: 'intro_screen'
     }});
     var aki = the_game.intro_screen.getAkiObject();
+
     aki.blit = function() {
       if (g_screen === 'intro') {
-        akiba.magic.standard_blit.apply(aki);
+        akiba.magic.standard_blit.call(aki);
       }
     }
     gbox.addObject(aki);
 
-    // gbox.addObject({
-    //   id:            'the_intro_screen',
-    //   group:         'game',
-    //   tileset:       'intro_screen',
-    //
-    //   initialize: function() {
-    //     toys.topview.initialize(this, { x: 0, y: 0 });
-    //   },
-    //
-    //   blit: function() {
-    //     if (maingame.state === 102) {
-    //       gbox.blitTile(gbox.getBufferContext(), {
-    //         tileset: this.tileset,
-    //         tile:    this.frame,
-    //         dx:      this.x,
-    //         dy:      this.y,
-    //         fliph:   this.fliph,
-    //         flipv:   this.flipv,
-    //         camera:  this.camera,
-    //         alpha:   1.0
-    //       });
-    //     } else {
-    //       // console.log('naw');
-    //     }
-    //   }
-    // });
+    // Tutorials screen
+    the_game.tutorial_screen = new Screen({ aki_attributes: {
+      id:      'tutorial_screen',
+      group:   'fights',
+      tileset: 'tutorial_screen'
+    }});
+    var aki_2 = the_game.tutorial_screen.getAkiObject();
+    aki_2.blit = function() {
+      if (g_screen === 'tutorial') {
+        akiba.magic.standard_blit.call(aki_2);
+      }
+    }
+    gbox.addObject(aki_2);
 
+    // Win screen
+    the_game.win_screen = new Screen({ aki_attributes: {
+      id:      'win_screen',
+      group:   'fights',
+      tileset: 'win_screen'
+    }});
+    var aki_3 = the_game.win_screen.getAkiObject();
+    aki_3.blit = function() {
+      if (g_screen === 'win') {
+        akiba.magic.standard_blit.call(aki_3);
+      }
+    }
+    gbox.addObject(aki_3);
+
+    // Lose screen
+    the_game.lose_screen = new Screen({ aki_attributes: {
+      id:      'lose_screen',
+      group:   'fights',
+      tileset: 'lose_screen'
+    }});
+    var aki_4 = the_game.lose_screen.getAkiObject();
+    aki_4.blit = function() {
+      if (g_screen === 'lose') {
+        akiba.magic.standard_blit.call(aki_4);
+      }
+    }
+    gbox.addObject(aki_4);
   },
 
   startBattle: function() {
     console.log('Battle started!');
     this.player.startBattle();
+  },
+
+  win: function() {
+    g_screen = 'win';
+  },
+  
+  lose: function() {
+    g_screen = 'lose';
   }
 });
