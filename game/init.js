@@ -19,7 +19,8 @@ var ALESTest = Klass.extend({
         console.log('B pressed');
       },
       C: function() {
-        console.log('C pressed');
+        debug.log('C pressed');
+        battle_system.input('c');
       },
       Z: function() {
         console.log('hi');
@@ -27,17 +28,6 @@ var ALESTest = Klass.extend({
           g_screen = null;
         }
       }
-      //,
- /*    D: function() {
-    console.log('D was: ' + isMusicOn);
-    isMusicOn = !isMusicOn;
-    if (isMusicOn)
-      //gbox.playAudio('bgmix', 'bgmix');
-      gbox.setAudioUnmute('bggtr');
-    else
-      //gbox.stopAudio('bgmix');
-      gbox.setAudioMute('bggtr');
-    } */
     });
 
     // The 'main' function is registered as a callback: this just says that when we're done with loadAll we should call 'main'
@@ -58,6 +48,8 @@ var ALESTest = Klass.extend({
 
     addMap();
 
+	battle_system = addBattleManager();
+	
     makeFoe('sarah', { x: 200, y: 256 });
     makeFoe('chris', { x: 300, y: 256 });
     makeFoe('joe',   { x: 400, y: 256 });
