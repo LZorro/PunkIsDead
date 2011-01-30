@@ -61,6 +61,8 @@ function makeFoe(character_name, params) {
 
     spawnButton('z', { aki_attributes: {} }, 2000);
     spawnButton('x', { aki_attributes: {} }, 2400);
+    spawnButton('v', { aki_attributes: {} }, 2800);
+    spawnButton('c', { aki_attributes: {} }, 3200);
 
     gbox.playAudio('bgmix', 'bgmix');
     gbox.playAudio('bggtr', 'bggtr');

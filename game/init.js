@@ -68,7 +68,6 @@ var ALESTest = Klass.extend({
     }});
     var fight_aki = the_game.fight_screen.getAkiObject();
     gbox.addObject(fight_aki);
-
     fight_aki.blit = function() {
       if (g_foes.sarah.aki_obj.in_battle) {
         akiba.magic.standard_blit.call(fight_aki);
