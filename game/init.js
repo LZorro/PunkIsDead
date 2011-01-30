@@ -63,8 +63,17 @@ var ALESTest = Klass.extend({
     makeFoe('joe',   { x: 400, y: 256 });
 
     // Fight screen
-    the_game.fight_screen = new Screen();
-    gbox.addObject(the_game.fight_screen.getAkiObject());
+    the_game.fight_screen = new Screen({ aki_attributes: {
+      id:      'sarah_fight',
+    }});
+    var fight_aki = the_game.fight_screen.getAkiObject();
+    gbox.addObject(fight_aki);
+
+    fight_aki.blit = function() {
+      if (g_foes.sarah.aki_obj.in_battle) {
+        akiba.magic.standard_blit.call(fight_aki);
+      }
+    }
 
     // Intro screen
     the_game.intro_screen = new Screen({ aki_attributes: {
