@@ -54,13 +54,13 @@ function makeFoe(character_name, params) {
   new_foe.startBattle = function() {
     aki.in_battle = true;
 
-    spawnButton('z', { aki_attributes: { id: 'button_z1', x: 100, y: 335 } });
-    spawnButton('x', { aki_attributes: { id: 'button_x1', x: 100, y: 365 } }, 300);
-    spawnButton('c', { aki_attributes: { id: 'button_c1', x: 100, y: 395 } }, 600);
-    spawnButton('v', { aki_attributes: { id: 'button_v1', x: 100, y: 425 } }, 1400);
+    spawnButton('z', { aki_attributes: {} });
+    spawnButton('x', { aki_attributes: {} }, 300);
+    spawnButton('c', { aki_attributes: {} }, 600);
+    spawnButton('v', { aki_attributes: {} }, 1400);
 
-    spawnButton('z', { aki_attributes: { id: 'button_v1', x: 100, y: 425 } }, 2000);
-    spawnButton('x', { aki_attributes: { id: 'button_v1', x: 100, y: 425 } }, 2400);
+    spawnButton('z', { aki_attributes: {} }, 2000);
+    spawnButton('x', { aki_attributes: {} }, 2400);
 
     gbox.playAudio('bgmix', 'bgmix');
     gbox.playAudio('bggtr', 'bggtr');

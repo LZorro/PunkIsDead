@@ -40,6 +40,7 @@ var Button = Klass.extend({
 });
 
 MAGIC_TIME = 1900
+var num = 1;
 function spawnButton(type, options, delay) {
   if (!delay) { delay = 0; }
 
@@ -62,6 +63,19 @@ function spawnButton(type, options, delay) {
     a_button_c.blit = function() {
       akiba.magic.standard_blit.call(a_button_c);
     }
+
+    if (type === 'z') {
+      a_button_c.y = 335;
+    } else if (type === 'x') {
+      a_button_c.y = 365;
+    } else if (type === 'c') {
+      a_button_c.y = 395;
+    } else if (type === 'v') {
+      a_button_c.y = 425;
+    }
+    a_button_c.x = 100;
+    a_button_c.id = 'button_' + type + num++;
+
     gbox.addObject(a_button_c);
   }, delay);
 }
