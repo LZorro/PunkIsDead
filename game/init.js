@@ -20,6 +20,7 @@ var ALESTest = Klass.extend({
       },
       C: function() {
         console.log('C pressed');
+		battle_system.input('c');
       }//,
  /*	  D: function() {
 		console.log('D was: ' + isMusicOn);
