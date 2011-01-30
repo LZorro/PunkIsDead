@@ -54,6 +54,10 @@ var ALESTest = Klass.extend({
     makeFoe('sarah', { x: 200, y: 256 });
     makeFoe('chris', { x: 300, y: 256 });
     makeFoe('joe',   { x: 400, y: 256 });
+
+    the_game.fight_screen = new FightScreen();
+
+    gbox.addObject(the_game.fight_screen.getAkiObject());
   },
 
   startBattle: function() {

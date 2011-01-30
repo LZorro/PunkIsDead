@@ -14,6 +14,7 @@ function getImageResources(){
       ['enemy_dot',            'images/enemy_dot.png'],
       ['block_sprite',         'images/block_sprite.png'],
       ['city_background',      'images/city_background.png'],
+      ['fight_background',     'images/poserbattlescreen.jpg'],
       ['background_tilesheet', 'images/bg1.png']
     ];
   if($config.use_plugins){
@@ -127,6 +128,15 @@ function getTileResources(){
       tileh:   96,
       tilew:   96,
       tilerow: 14,
+      gapx:    0,
+      gapy:    0
+    },
+    {
+      id:      'fight_background_1',
+      image:   'fight_background',
+      tilew:   640,
+      tileh:   480,
+      tilerow: 1,
       gapx:    0,
       gapy:    0
     }
