@@ -1,4 +1,5 @@
 var g_foes = {};
+var g_fff = true;
 
 var Foe = PlatformPerson.extend({
   init: function(options) {
@@ -48,7 +49,23 @@ function makeFoe(character_name, params) {
     hurt:   { speed: 8, frames: [2]    },
     punk:   { speed: 8, frames: [3]    }
   }
-  aki.animIndex = 'hurt';
+  aki.animIndex = 'normal';
+
+  aki.otherAnimationUpdates = function() {
+    if (gbox.getObject("player","player_id") && gbox.objectIsVisible(the_game.player) && gbox.objectIsVisible(this) && gbox.collides(the_game.player, this, 1)) {
+      if (the_game.player.initialized) {
+        if (!this.in_battle) {
+          the_game.startBattle();
+          this.in_battle = true;
+        }
+        this.animIndex = 'hurt';
+      }
+    } else if (this.converted) {
+      this.animIndex = 'punk';
+    } else {
+      this.animIndex = 'normal';
+    }
+  }
 
   g_foes[character_name] = new_foe;
 

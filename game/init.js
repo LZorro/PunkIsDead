@@ -47,12 +47,17 @@ var ALESTest = Klass.extend({
   },
 
   startGame: function() {
-    addPlayer();
+    the_game.player = addPlayer();
 
     addMap();
 
     makeFoe('sarah', { x: 200, y: 256 });
     makeFoe('chris', { x: 300, y: 256 });
     makeFoe('joe',   { x: 400, y: 256 });
+  },
+
+  startBattle: function() {
+    console.log('Battle started!');
+    this.player.startBattle();
   }
 });
