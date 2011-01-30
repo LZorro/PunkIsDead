@@ -15,7 +15,9 @@ function getImageResources(){
       ['block_sprite',         'images/block_sprite.png'],
       ['city_background',      'images/city_background.png'],
       ['fight_background',     'images/poserbattlescreen.jpg'],
-      ['splash',               'images/splash.png'],
+      ['screen_splash',        'images/splash.png'],
+      ['screen_win',           'images/win.png'],
+      ['screen_lose',          'images/lose.png'],
       ['background_tilesheet', 'images/bg1.png']
     ];
   if($config.use_plugins){
@@ -143,7 +145,7 @@ function getTileResources(){
     },
     {
       id:      'intro_screen',
-      image:   'splash',
+      image:   'screen_splash',
       tilew:   640,
       tileh:   480,
       tilerow: 1,

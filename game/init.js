@@ -13,7 +13,7 @@ var ALESTest = Klass.extend({
 
     gbox.addBundle({ file: 'bundle.js?' + timestamp() });
 
-	//var isMusicOn = true;
+  //var isMusicOn = true;
     $aki.controls.watchKeys({
       B: function() {
         console.log('B pressed');
@@ -21,16 +21,16 @@ var ALESTest = Klass.extend({
       C: function() {
         console.log('C pressed');
       }//,
- /*	  D: function() {
-		console.log('D was: ' + isMusicOn);
-		isMusicOn = !isMusicOn;
-		if (isMusicOn)
-		  //gbox.playAudio('bgmix', 'bgmix');
-		  gbox.setAudioUnmute('bggtr');
-		else
-		  //gbox.stopAudio('bgmix');
-		  gbox.setAudioMute('bggtr');
-	  } */
+ /*    D: function() {
+    console.log('D was: ' + isMusicOn);
+    isMusicOn = !isMusicOn;
+    if (isMusicOn)
+      //gbox.playAudio('bgmix', 'bgmix');
+      gbox.setAudioUnmute('bggtr');
+    else
+      //gbox.stopAudio('bgmix');
+      gbox.setAudioMute('bggtr');
+    } */
     });
 
     // The 'main' function is registered as a callback: this just says that when we're done with loadAll we should call 'main'
@@ -55,9 +55,48 @@ var ALESTest = Klass.extend({
     makeFoe('chris', { x: 300, y: 256 });
     makeFoe('joe',   { x: 400, y: 256 });
 
-    the_game.fight_screen = new FightScreen();
-
+    the_game.fight_screen = new Screen();
     gbox.addObject(the_game.fight_screen.getAkiObject());
+
+    the_game.intro_screen = new Screen({ aki_attributes: {
+      group:   'fights',
+      tileset: 'intro_screen'
+    }});
+    var aki = the_game.intro_screen.getAkiObject();
+    aki.blit = function() {
+      if (g_screen === 'intro') {
+        akiba.magic.standard_blit.apply(aki);
+      }
+    }
+    gbox.addObject(aki);
+
+    // gbox.addObject({
+    //   id:            'the_intro_screen',
+    //   group:         'game',
+    //   tileset:       'intro_screen',
+    //
+    //   initialize: function() {
+    //     toys.topview.initialize(this, { x: 0, y: 0 });
+    //   },
+    //
+    //   blit: function() {
+    //     if (maingame.state === 102) {
+    //       gbox.blitTile(gbox.getBufferContext(), {
+    //         tileset: this.tileset,
+    //         tile:    this.frame,
+    //         dx:      this.x,
+    //         dy:      this.y,
+    //         fliph:   this.fliph,
+    //         flipv:   this.flipv,
+    //         camera:  this.camera,
+    //         alpha:   1.0
+    //       });
+    //     } else {
+    //       // console.log('naw');
+    //     }
+    //   }
+    // });
+
   },
 
   startBattle: function() {
