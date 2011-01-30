@@ -57,7 +57,7 @@ function spawnButton(type, options, delay) {
       console.log(msec_passed);
       this.x = 100 + (MAGIC_TIME - msec_passed)/5;
       if (msec_passed >= MAGIC_TIME) {
-        gbox.trashGroup('buttons');
+        gbox.trashObject(this);
       }
     }
     a_button_c.blit = function() {
