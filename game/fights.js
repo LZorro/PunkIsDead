@@ -9,7 +9,6 @@ var Screen = Klass.extend({
     }, options.aki_attributes || {});
 
     this.id = this.aki_attributes.id;
-    console.log(this.aki_attributes);
   },
 
   getAkiObject: function() {

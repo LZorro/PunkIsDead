@@ -20,7 +20,14 @@ var ALESTest = Klass.extend({
       },
       C: function() {
         console.log('C pressed');
-      }//,
+      },
+      Z: function() {
+        console.log('hi');
+        if (g_screen === 'intro') {
+          g_screen = null;
+        }
+      }
+      //,
  /*    D: function() {
     console.log('D was: ' + isMusicOn);
     isMusicOn = !isMusicOn;
@@ -55,9 +62,11 @@ var ALESTest = Klass.extend({
     makeFoe('chris', { x: 300, y: 256 });
     makeFoe('joe',   { x: 400, y: 256 });
 
+    // Fight screen
     the_game.fight_screen = new Screen();
     gbox.addObject(the_game.fight_screen.getAkiObject());
 
+    // Intro screen
     the_game.intro_screen = new Screen({ aki_attributes: {
       group:   'fights',
       tileset: 'intro_screen'
@@ -69,34 +78,6 @@ var ALESTest = Klass.extend({
       }
     }
     gbox.addObject(aki);
-
-    // gbox.addObject({
-    //   id:            'the_intro_screen',
-    //   group:         'game',
-    //   tileset:       'intro_screen',
-    //
-    //   initialize: function() {
-    //     toys.topview.initialize(this, { x: 0, y: 0 });
-    //   },
-    //
-    //   blit: function() {
-    //     if (maingame.state === 102) {
-    //       gbox.blitTile(gbox.getBufferContext(), {
-    //         tileset: this.tileset,
-    //         tile:    this.frame,
-    //         dx:      this.x,
-    //         dy:      this.y,
-    //         fliph:   this.fliph,
-    //         flipv:   this.flipv,
-    //         camera:  this.camera,
-    //         alpha:   1.0
-    //       });
-    //     } else {
-    //       // console.log('naw');
-    //     }
-    //   }
-    // });
-
   },
 
   startBattle: function() {
