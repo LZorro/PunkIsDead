@@ -16,7 +16,7 @@ var PunkIsDead = Klass.extend({
       },
       C: function() {
         debug.log('C pressed');
-        battle_system.input('c');
+        the_game.battle_system.input('c');
       },
       SPACE: function() {
         the_game.nextScreen();
@@ -47,7 +47,7 @@ var PunkIsDead = Klass.extend({
 
     addMap();
 
-    battle_system = addBattleManager();
+    the_game.battle_system = addBattleManager();
 
     makeFoe('sarah', { x: 200, y: 256 });
     makeFoe('chris', { x: 300, y: 256 });
@@ -66,6 +66,10 @@ var PunkIsDead = Klass.extend({
   startBattle: function() {
     console.log('Battle started!');
     this.player.startBattle();
+  },
+
+  endBattle: function() {
+    this.player.endBattle();
   },
 
   win: function() {
@@ -106,40 +110,13 @@ var PunkIsDead = Klass.extend({
     // Create a new maingame into the "gamecycle" group. Will be called "gamecycle". From now, we've to "override" some of the maingame default actions.
     maingame = gamecycle.createMaingame('game', 'game');
 
-    maingame.gameMenu = function() { return true; };
-    maingame.gameIntroAnimation = function() { return true; };
+    maingame.gameMenu                 = function() { return true; };
+    maingame.gameIntroAnimation       = function() { return true; };
     maingame.pressStartIntroAnimation = function() { return true; };
-    maingame.gameTitleIntroAnimation = function() { return true; };
-    maingame.endlevelIntroAnimation = function(reset) {
-      if (reset) {
-         toys.resetToy(this,"default-blinker");
-      } else {
-        return toys.text.blink(this,"default-blinker",gbox.getBufferContext(),{font:"small",text:"WELL DONE!",valign:gbox.ALIGN_MIDDLE,halign:gbox.ALIGN_CENTER,dx:0,dy:0,dw:gbox.getScreenW(),dh:gbox.getScreenH(),blinkspeed:5,times:10});
-      }
-    };
-
-    // Game ending
-    maingame.gameEndingIntroAnimation = function(reset) {
-      if (reset) {
-        toys.resetToy(this,"default-blinker");
-      } else {
-          for (var y = 0; y < 30; y++)
-            for (var x = 0; x < 40; x++)
-              if (game.level[y][x] == '2') help.setTileInMapAtPixel(gbox.getCanvasContext("map_canvas"),map,x*32,y*32,1,"map");
-          gbox.getObject('player','player_id').resetGame();
-    gbox.blitFade(gbox.getBufferContext(),{alpha:1});
-          return toys.TOY_DONE;
-      }
-    };
-
-    maingame.gameoverIntroAnimation = function(reset) {
-       if (reset) {
-        gbox.stopChannel("bgmusic");
-        toys.resetToy(this,"default-blinker");
-      } else {
-        return toys.TOY_DONE;
-      }
-    };
+    maingame.gameTitleIntroAnimation  = function() { return true; };
+    maingame.endlevelIntroAnimation   = function() { return true; };
+    maingame.gameEndingIntroAnimation = function() { return true; };
+    maingame.gameoverIntroAnimation   = function() { return true; };
 
     // This function will be called before the game starts running, so here is where we add our game elements
     maingame.initializeGame = the_game.startGame;
