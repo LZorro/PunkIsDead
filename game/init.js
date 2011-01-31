@@ -56,49 +56,15 @@ var ALESTest = Klass.extend({
 
     addMap();
 
-	battle_system = addBattleManager();
-	
+	  battle_system = addBattleManager();
+
     makeFoe('sarah', { x: 200, y: 256 });
     makeFoe('chris', { x: 300, y: 256 });
     makeFoe('joe',   { x: 400, y: 256 });
 
-    // Fight screen
-    the_game.fight_screen = new Screen({ aki_attributes: {
-      id:      'sarah_fight',
-    }});
-    var fight_aki = the_game.fight_screen.getAkiObject();
-    gbox.addObject(fight_aki);
-    fight_aki.blit = function() {
-      if (g_foes.sarah.aki_obj.in_battle) {
-        akiba.magic.standard_blit.call(fight_aki);
-      }
-    }
-
-    // Fight screen
-    the_game.fight_screen_3 = new Screen({ aki_attributes: {
-      id:      'joe_fight',
-      tileset: 'fight_background_2'
-    }});
-    var fight_aki_3 = the_game.fight_screen_3.getAkiObject();
-    gbox.addObject(fight_aki_3);
-    fight_aki_3.blit = function() {
-      if (g_foes.joe.aki_obj.in_battle) {
-        akiba.magic.standard_blit.call(fight_aki_3);
-      }
-    }
-
-    // Fight screen
-    the_game.fight_screen_2 = new Screen({ aki_attributes: {
-      id:      'chris_fight',
-      tileset: 'fight_background_1'
-    }});
-    var fight_aki_2 = the_game.fight_screen_2.getAkiObject();
-    gbox.addObject(fight_aki_2);
-    fight_aki_2.blit = function() {
-      if (g_foes.chris.aki_obj.in_battle) {
-        akiba.magic.standard_blit.call(fight_aki_2);
-      }
-    }
+    makeFightScreen('sarah');
+    makeFightScreen('joe');
+    makeFightScreen('chris');
 
     // Intro screen
     the_game.intro_screen = new Screen({ aki_attributes: {

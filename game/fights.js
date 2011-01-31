@@ -4,8 +4,7 @@ var Screen = Klass.extend({
 
     this.game = the_game;
     this.aki_attributes = _.extend({
-      group:   'fights',
-      tileset: 'fight_background_3'
+      group:   'fights'
     }, options.aki_attributes || {});
 
     this.id = this.aki_attributes.id;
@@ -54,7 +53,7 @@ function spawnButton(type, options, delay) {
     var startTime = new Date().getTime();
     a_button_c.updateAnimation = function() {
       var msec_passed = new Date().getTime() - startTime;
-      console.log(msec_passed);
+      // console.log(msec_passed);
       this.x = 100 + (MAGIC_TIME - msec_passed)/5;
       if (msec_passed >= MAGIC_TIME) {
         gbox.trashObject(this);
@@ -78,4 +77,25 @@ function spawnButton(type, options, delay) {
 
     gbox.addObject(a_button_c);
   }, delay);
+}
+
+function makeFightScreen(name, options) {
+  if (!options) options = {}
+
+  var fight_screen = new Screen({
+    aki_attributes: {
+      id:      options.id      || 'fight_' + name,
+      tileset: options.tileset || 'fight_background_' + name
+    }
+  });
+
+  the_game['fight_screen_' + name] = fight_screen;
+
+  var aki = fight_screen.getAkiObject();
+  aki.blit = function() {
+    if (g_foes[name].aki_obj.in_battle) {
+      akiba.magic.standard_blit.call(aki);
+    }
+  }
+  gbox.addObject(aki);
 }

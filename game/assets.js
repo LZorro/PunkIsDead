@@ -142,7 +142,7 @@ function getTileResources(){
       gapy:    0
     },
     {
-      id:      'fight_background_1',
+      id:      'fight_background_chris',
       image:   'fight_background_1',
       tilew:   640,
       tileh:   480,
@@ -151,7 +151,7 @@ function getTileResources(){
       gapy:    0
     },
     {
-      id:      'fight_background_2',
+      id:      'fight_background_joe',
       image:   'fight_background_2',
       tilew:   640,
       tileh:   480,
@@ -160,7 +160,7 @@ function getTileResources(){
       gapy:    0
     },
     {
-      id:      'fight_background_3',
+      id:      'fight_background_sarah',
       image:   'fight_background_3',
       tilew:   640,
       tileh:   480,
