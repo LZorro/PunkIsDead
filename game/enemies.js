@@ -1,5 +1,4 @@
 var g_foes = {};
-var g_fff = true;
 
 var Foe = PlatformPerson.extend({
   init: function(options) {
@@ -84,7 +83,7 @@ function makeFoe(character_name, params) {
     }
   }
 
-  g_foes[character_name] = new_foe;
+  the_game.foes[character_name] = new_foe;
 
   gbox.addObject(aki);
 }

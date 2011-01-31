@@ -88,11 +88,11 @@ function makeFightScreen(name, options) {
     }
   });
 
-  the_game['fight_screen_' + name] = fight_screen;
+  the_game.fight_screens[name] = fight_screen;
 
   var aki = fight_screen.getAkiObject();
   aki.blit = function() {
-    if (g_foes[name].aki_obj.in_battle) {
+    if (the_game.foes[name].aki_obj.in_battle) {
       akiba.magic.standard_blit.call(aki);
     }
   }
@@ -112,7 +112,7 @@ function makeMainScreen(name, options) {
 
   var aki = screen.getAkiObject();
   aki.blit = function() {
-    if (g_screen === name) {
+    if (the_game.currentScreen === name) {
       akiba.magic.standard_blit.call(aki);
     }
   }

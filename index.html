@@ -110,7 +110,7 @@
     'lib/actors/top_down.js',
     'lib/actors/aki_player.js',
     'lib/actors/platform_person.js',
-    'game/init.js',
+    'game/punk_is_dead.js',
     'game/assets.js',
     'game/enemies.js',
     'game/fights.js',
@@ -141,9 +141,6 @@
   head.ready(function() {
     urlParams = $.deparam.querystring();
     currentLevel = new Level();
-
-    levelParam = getURLParam('level');
-    levelParam && currentLevel.generateMapFromString(levelParam);
 
     the_game = new $games[getURLParam('game') || $config.default_game]();
     the_game.start && the_game.start();
