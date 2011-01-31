@@ -8,6 +8,7 @@ var Screen = Klass.extend({
     }, options.aki_attributes || {});
 
     this.id = this.aki_attributes.id;
+    this.name = options.name || this.id;
   },
 
   getAkiObject: function() {
@@ -34,6 +35,43 @@ var Button = Klass.extend({
 
     this.aki_obj = obj;
     return obj;
+  }
+});
+
+var Battle = Klass.extend({
+  init: function(options) {
+    if (!options) options = {};
+
+    this.foe = options.foe;
+  },
+
+  start: function() {
+    the_game.startBattle(this);
+    the_game.changeScreen(this.foe.fight_screen.name);
+
+    this.playNotes();
+
+    gbox.playAudio('bgmix', 'bgmix');
+    gbox.playAudio('bggtr', 'bggtr');
+  },
+
+  end: function() {
+    gbox.stopAudio('bgmix');
+    gbox.stopAudio('bggtr');
+    the_game.endBattle();
+    gbox.trashGroup('buttons');
+  },
+
+  playNotes: function() {
+    spawnButton('z', { aki_attributes: {} });
+    spawnButton('x', { aki_attributes: {} }, 300);
+    spawnButton('c', { aki_attributes: {} }, 600);
+    spawnButton('v', { aki_attributes: {} }, 1400);
+
+    spawnButton('z', { aki_attributes: {} }, 2000);
+    spawnButton('x', { aki_attributes: {} }, 2400);
+    spawnButton('v', { aki_attributes: {} }, 2800);
+    spawnButton('c', { aki_attributes: {} }, 3200);
   }
 });
 
@@ -85,18 +123,22 @@ function makeFightScreen(name, options) {
     aki_attributes: {
       id:      options.id      || 'fight_' + name,
       tileset: options.tileset || 'fight_background_' + name
-    }
+    },
+    name: name
   });
 
   the_game.fight_screens[name] = fight_screen;
 
   var aki = fight_screen.getAkiObject();
   aki.blit = function() {
-    if (the_game.foes[name].aki_obj.in_battle) {
+    // if (the_game.foes[name].aki_obj.in_battle) {
+    if (the_game.currentScreen === name) {
       akiba.magic.standard_blit.call(aki);
     }
   }
   gbox.addObject(aki);
+
+  return fight_screen;
 }
 
 function makeMainScreen(name, options) {

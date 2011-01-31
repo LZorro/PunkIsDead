@@ -53,23 +53,23 @@ var PunkIsDead = Klass.extend({
     makeFoe('chris', { x: 300, y: 256 });
     makeFoe('joe',   { x: 400, y: 256 });
 
-    makeFightScreen('sarah');
-    makeFightScreen('joe');
-    makeFightScreen('chris');
-
     makeMainScreen('intro');
     makeMainScreen('tutorial');
     makeMainScreen('win');
     makeMainScreen('lose');
   },
 
-  startBattle: function() {
+  startBattle: function(battle) {
     console.log('Battle started!');
     this.player.startBattle();
+    this.currentBattle = battle;
+    this.oldScreen = this.currentScreen;
   },
 
   endBattle: function() {
     this.player.endBattle();
+    this.currentBattle = null;
+    this.changeScreen(this.oldScreen);
   },
 
   win: function() {

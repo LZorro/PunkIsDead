@@ -14,6 +14,13 @@ var Foe = PlatformPerson.extend({
     }, options.aki_attributes || {});
 
     this._super(options);
+
+    this.battle = new Battle({ foe: this });
+  },
+
+  startBattle: function() {
+    this.aki_obj.in_battle = true;
+    this.battle.start();
   }
 });
 
@@ -50,28 +57,10 @@ function makeFoe(character_name, params) {
   }
   aki.animIndex = 'normal';
 
-  new_foe.startBattle = function() {
-    aki.in_battle = true;
-
-    spawnButton('z', { aki_attributes: {} });
-    spawnButton('x', { aki_attributes: {} }, 300);
-    spawnButton('c', { aki_attributes: {} }, 600);
-    spawnButton('v', { aki_attributes: {} }, 1400);
-
-    spawnButton('z', { aki_attributes: {} }, 2000);
-    spawnButton('x', { aki_attributes: {} }, 2400);
-    spawnButton('v', { aki_attributes: {} }, 2800);
-    spawnButton('c', { aki_attributes: {} }, 3200);
-
-    gbox.playAudio('bgmix', 'bgmix');
-    gbox.playAudio('bggtr', 'bggtr');
-  }
-
   aki.otherAnimationUpdates = function() {
     if (gbox.getObject("player","player_id") && gbox.objectIsVisible(the_game.player) && gbox.objectIsVisible(this) && gbox.collides(the_game.player, this, 1)) {
       if (the_game.player.initialized) {
         if (!this.in_battle) {
-          the_game.startBattle();
           new_foe.startBattle();
         }
         this.animIndex = 'hurt';
@@ -83,7 +72,9 @@ function makeFoe(character_name, params) {
     }
   }
 
+  gbox.addObject(aki);
+
   the_game.foes[character_name] = new_foe;
 
-  gbox.addObject(aki);
+  new_foe.fight_screen = makeFightScreen(character_name);
 }
