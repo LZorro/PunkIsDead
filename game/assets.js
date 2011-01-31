@@ -169,7 +169,7 @@ function getTileResources(){
       gapy:    0
     },
     {
-      id:      'intro_screen',
+      id:      'main_screen_intro',
       image:   'screen_splash',
       tilew:   640,
       tileh:   480,
@@ -178,7 +178,7 @@ function getTileResources(){
       gapy:    0
     },
     {
-      id:      'tutorial_screen',
+      id:      'main_screen_tutorial',
       image:   'screen_tutorial',
       tilew:   640,
       tileh:   480,
@@ -187,7 +187,7 @@ function getTileResources(){
       gapy:    0
     },
     {
-      id:      'win_screen',
+      id:      'main_screen_win',
       image:   'screen_win',
       tilew:   640,
       tileh:   480,
@@ -196,13 +196,11 @@ function getTileResources(){
       gapy:    0
     },
     {
-      id:      'lose_screen',
+      id:      'main_screen_lose',
       image:   'screen_lose',
       tilew:   640,
       tileh:   480,
-      tilerow: 1,
-      gapx:    0,
-      gapy:    0
+      tilerow: 1, gapx: 0, gapy: 0
     },
     {
       id:      'button_c',

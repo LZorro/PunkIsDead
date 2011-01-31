@@ -11,10 +11,9 @@ var Screen = Klass.extend({
   },
 
   getAkiObject: function() {
-    var obj = _(_(akiba.actors.top_down_object).clone()).extend(this.aki_attributes);
+    this.aki_obj = _(akiba.actors.top_down_object).chain().clone().extend(this.aki_attributes).value();
 
-    this.aki_obj = obj;
-    return obj;
+    return this.aki_obj;
   }
 });
 
@@ -94,6 +93,26 @@ function makeFightScreen(name, options) {
   var aki = fight_screen.getAkiObject();
   aki.blit = function() {
     if (g_foes[name].aki_obj.in_battle) {
+      akiba.magic.standard_blit.call(aki);
+    }
+  }
+  gbox.addObject(aki);
+}
+
+function makeMainScreen(name, options) {
+  if (!options) options = {}
+
+  var screen = new Screen({ aki_attributes: {
+    id:      options.id      || 'main_screen_' + name,
+    group:   options.group   || 'fights',
+    tileset: options.tileset || 'main_screen_' + name
+  }});
+
+  the_game['main_screen_' + name] = screen;
+
+  var aki = screen.getAkiObject();
+  aki.blit = function() {
+    if (g_screen === name) {
       akiba.magic.standard_blit.call(aki);
     }
   }
