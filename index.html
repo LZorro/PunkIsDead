@@ -96,6 +96,7 @@
     'lib/jquery-ui/jquery.ui.toolbox.js',
     'lib/jquery/jquery.tools_tooltips.min.js',
     'lib/akiba.js',
+    'akiba/camera.js',
     'akihabara/gbox.js',
     'akihabara/iphopad.js',
     'akihabara/trigo.js',
@@ -110,11 +111,11 @@
     'lib/actors/top_down.js',
     'lib/actors/aki_player.js',
     'lib/actors/platform_person.js',
+    { game: 'lib/game.js' },
     'game/punk_is_dead.js',
     'game/assets.js',
     'game/enemies.js',
     'game/fights.js',
-    { game: 'lib/game.js' },
     'lib/levels/map.js'
   );
 
@@ -142,7 +143,7 @@
     urlParams = $.deparam.querystring();
     currentLevel = new Level();
 
-    the_game = new $games[getURLParam('game') || $config.default_game]();
+    the_game = new PunkIsDead();
     the_game.start && the_game.start();
     the_game.level = currentLevel.map;
   });

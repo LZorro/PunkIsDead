@@ -1,4 +1,4 @@
-var PunkIsDead = Klass.extend({
+var PunkIsDead = Game.extend({
   init: function() {
     this.foes = {};
     this.main_screens = {};
