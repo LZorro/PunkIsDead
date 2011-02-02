@@ -3,18 +3,30 @@ var Screen = Klass.extend({
     if (!options) options = {};
 
     this.game = the_game;
+    _(this).extend(options);
+
     this.aki_attributes = _.extend({
-      group:   'fights'
+      group: 'fights',
+      blit: function() {
+        if (this.actor.visible()) { akiba.magic.standard_blit.call(this); }
+      },
+      actor: this
     }, options.aki_attributes || {});
 
-    this.id = this.aki_attributes.id;
-    this.name = options.name || this.id;
-  },
-
-  getAkiObject: function() {
     this.aki_obj = _(akiba.actors.top_down_object).chain().clone().extend(this.aki_attributes).value();
 
+    this.id = this.aki_attributes.id;
+    this.name = this.name || this.id;
+  },
+
+  aki: function() {
     return this.aki_obj;
+  }
+});
+
+var GameScreen = Screen.extend({
+  visible: function() {
+    return this.game.currentScreen === this.name;
   }
 });
 
@@ -30,7 +42,7 @@ var Button = Klass.extend({
     this.id = this.aki_attributes.id;
   },
 
-  getAkiObject: function() {
+  aki: function() {
     var obj = _(this.aki_attributes).extend(akiba.actors.top_down_object);
 
     this.aki_obj = obj;
@@ -56,10 +68,8 @@ var Battle = Klass.extend({
     gbox.playAudio('bggtr', 'bggtr');
     battle_manager.start();
 
-    var audiolength = gbox.getAudioDuration('bgmix');
-    console.log('audio: ' + audiolength);
-    var f = gbox.getFps();
-    console.log('fps: ' + f);
+    console.log('audio: ' + gbox.getAudioDuration('bgmix'));
+    console.log('fps: ' + gbox.getFps());
   },
 
   end: function() {
@@ -75,20 +85,10 @@ var Battle = Klass.extend({
     _(battle_manager.song_data).each(_.bind(function(note) {
       var note_letter = note[1];
       if (_(['c', 'v', 'z', 'x']).include(note_letter)) {
-        this.noteQueue.push(setTimeout("spawnNote('" + note[1] + "', {})", note[0] * 1000));
+        this.noteQueue.push(setTimeout("spawnNote('" + note[1] + "', {})", (note[0] - 11) * 1000));
       }
       debug.log(note[0], note_letter);
     }, this));
-
-    // spawnNote('z', { aki_attributes: {} });
-    // spawnNote('x', { aki_attributes: {} }, 300);
-    // spawnNote('c', { aki_attributes: {} }, 600);
-    // spawnNote('v', { aki_attributes: {} }, 1400);
-
-    // spawnNote('z', { aki_attributes: {} }, 2000);
-    // spawnNote('x', { aki_attributes: {} }, 2400);
-    // spawnNote('v', { aki_attributes: {} }, 2800);
-    // spawnNote('c', { aki_attributes: {} }, 3200);
   }
 });
 
@@ -100,7 +100,7 @@ function spawnNote(type, options) {
     tileset: 'button_' + type
   }).extend(options.aki_attributes || {})});
 
-  var a_button_c = the_game.button_c.getAkiObject();
+  var a_button_c = the_game.button_c.aki();
   var startTime = new Date().getTime();
   a_button_c.updateAnimation = function() {
     var msec_passed = new Date().getTime() - startTime;
@@ -132,7 +132,7 @@ function spawnNote(type, options) {
 function makeFightScreen(name, options) {
   if (!options) options = {}
 
-  var fight_screen = new Screen({
+  var fight_screen = new GameScreen({
     aki_attributes: {
       id:      options.id      || 'fight_' + name,
       tileset: options.tileset || 'fight_background_' + name
@@ -142,14 +142,7 @@ function makeFightScreen(name, options) {
 
   the_game.fight_screens[name] = fight_screen;
 
-  var aki = fight_screen.getAkiObject();
-  aki.blit = function() {
-    // if (the_game.foes[name].aki_obj.in_battle) {
-    if (the_game.currentScreen === name) {
-      akiba.magic.standard_blit.call(aki);
-    }
-  }
-  gbox.addObject(aki);
+  gbox.addObject(fight_screen.aki());
 
   return fight_screen;
 }
@@ -157,19 +150,16 @@ function makeFightScreen(name, options) {
 function makeMainScreen(name, options) {
   if (!options) options = {}
 
-  var screen = new Screen({ aki_attributes: {
-    id:      options.id      || 'main_screen_' + name,
-    group:   options.group   || 'fights',
-    tileset: options.tileset || 'main_screen_' + name
-  }});
+  var screen = new GameScreen({
+    aki_attributes: {
+      id:      options.id      || 'main_screen_' + name,
+      group:   options.group   || 'fights',
+      tileset: options.tileset || 'main_screen_' + name
+    },
+    name: name
+  });
 
   the_game['main_screen_' + name] = screen;
 
-  var aki = screen.getAkiObject();
-  aki.blit = function() {
-    if (the_game.currentScreen === name) {
-      akiba.magic.standard_blit.call(aki);
-    }
-  }
-  gbox.addObject(aki);
+  gbox.addObject(screen.aki());
 }
