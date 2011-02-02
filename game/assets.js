@@ -3,8 +3,8 @@ function getImageResources(){
     [
       ['font',                 'images/fonts/CasualEncounter.png'],
       ['logo',                 'images/logo.png'],
-      ['pixie_walking',        'images/characters/pixxie_walking.png'],
       ['map_spritesheet',      'images/decals/map_pieces.png'],
+      ['pixie_walking',        'images/characters/pixxie_walking.png'],
       ['enemy_sprite_teeny',   'images/characters/enemy_sprite_teeny.png'],
       ['enemy_sprite_poser',   'images/characters/enemy_sprite_poser.png'],
       ['enemy_sprite_dmann',   'images/characters/enemy_sprite_dmann.png'],
@@ -161,15 +161,13 @@ function getTileResources() {
       id:      'status_msg_rock',
       image:   'status_msg_rock',
       tilew:   171,
-      tileh:   44,
-      tilerow: 1
+      tileh:   44
     },
     {
       id:      'status_msg_wait',
       image:   'status_msg_wait',
       tilew:   171,
-      tileh:   44,
-      tilerow: 1
+      tileh:   44
     }
   ];
 
