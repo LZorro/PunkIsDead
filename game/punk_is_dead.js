@@ -8,16 +8,9 @@ var PunkIsDead = Game.extend({
 
     help.akihabaraInit({ width: 640, height: 480, zoom: 1, title: (getURLParam('name') ? getURLParam('name') : 'Punk Is Dead') });
 
-    gbox.addBundle({ file: 'bundle.js?' + timestamp() });
+    gbox.addBundle({ file: timestampedURL('bundle.js') });
 
     $aki.controls.watchKeys({
-      B: function() {
-        console.log('B pressed');
-      },
-      C: function() {
-        debug.log('C pressed');
-        the_game.battle_system.input('c');
-      },
       SPACE: function() {
         the_game.nextScreen();
       },
@@ -26,6 +19,9 @@ var PunkIsDead = Game.extend({
       },
       L: function() {
         the_game.lose();
+      },
+      E: function() {
+        the_game.currentBattle.end();
       }
     });
 
@@ -143,11 +139,6 @@ var PunkIsDead = Game.extend({
     // We draw the map onto our 'map_canvas' canvas that we created above.
     // This means that the map's 'blit' function can simply draw the 'map_canvas' to the screen to render the map
     gbox.blitTilemap(gbox.getCanvasContext('map_canvas'), map);
-
-    var audiolength = gbox.getAudioDuration('bgmix');
-    console.log('audio: ' + audiolength);
-    var f = gbox.getFps();
-    console.log('fps: ' + f);
 
     gbox.go();
   }

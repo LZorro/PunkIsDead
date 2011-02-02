@@ -43,6 +43,7 @@ var Battle = Klass.extend({
     if (!options) options = {};
 
     this.foe = options.foe;
+    this.noteQueue = [];
   },
 
   start: function() {
@@ -53,6 +54,12 @@ var Battle = Klass.extend({
 
     gbox.playAudio('bgmix', 'bgmix');
     gbox.playAudio('bggtr', 'bggtr');
+    battle_manager.start();
+
+    var audiolength = gbox.getAudioDuration('bgmix');
+    console.log('audio: ' + audiolength);
+    var f = gbox.getFps();
+    console.log('fps: ' + f);
   },
 
   end: function() {
@@ -60,60 +67,66 @@ var Battle = Klass.extend({
     gbox.stopAudio('bggtr');
     the_game.endBattle();
     gbox.trashGroup('buttons');
+    _(this.noteQueue).each(function(timeout) { clearTimeout(timeout); });
+    battle_manager.end();
   },
 
   playNotes: function() {
-    spawnButton('z', { aki_attributes: {} });
-    spawnButton('x', { aki_attributes: {} }, 300);
-    spawnButton('c', { aki_attributes: {} }, 600);
-    spawnButton('v', { aki_attributes: {} }, 1400);
+    _(battle_manager.song_data).each(_.bind(function(note) {
+      var note_letter = note[1];
+      if (_(['c', 'v', 'z', 'x']).include(note_letter)) {
+        this.noteQueue.push(setTimeout("spawnNote('" + note[1] + "', {})", note[0] * 1000));
+      }
+      debug.log(note[0], note_letter);
+    }, this));
 
-    spawnButton('z', { aki_attributes: {} }, 2000);
-    spawnButton('x', { aki_attributes: {} }, 2400);
-    spawnButton('v', { aki_attributes: {} }, 2800);
-    spawnButton('c', { aki_attributes: {} }, 3200);
+    // spawnNote('z', { aki_attributes: {} });
+    // spawnNote('x', { aki_attributes: {} }, 300);
+    // spawnNote('c', { aki_attributes: {} }, 600);
+    // spawnNote('v', { aki_attributes: {} }, 1400);
+
+    // spawnNote('z', { aki_attributes: {} }, 2000);
+    // spawnNote('x', { aki_attributes: {} }, 2400);
+    // spawnNote('v', { aki_attributes: {} }, 2800);
+    // spawnNote('c', { aki_attributes: {} }, 3200);
   }
 });
 
-MAGIC_TIME = 1900
+MAGIC_TIME = 2300 //1900
 var num = 1;
-function spawnButton(type, options, delay) {
-  if (!delay) { delay = 0; }
+function spawnNote(type, options) {
+  the_game.button_c = new Button({ aki_attributes: _({
+    id:      options.id,
+    tileset: 'button_' + type
+  }).extend(options.aki_attributes || {})});
 
-  setTimeout(function() {
-    the_game.button_c = new Button({ aki_attributes: _({
-      id:      options.id,
-      tileset: 'button_' + type
-    }).extend(options.aki_attributes || {})});
-
-    var a_button_c = the_game.button_c.getAkiObject();
-    var startTime = new Date().getTime();
-    a_button_c.updateAnimation = function() {
-      var msec_passed = new Date().getTime() - startTime;
-      // console.log(msec_passed);
-      this.x = 100 + (MAGIC_TIME - msec_passed)/5;
-      if (msec_passed >= MAGIC_TIME) {
-        gbox.trashObject(this);
-      }
+  var a_button_c = the_game.button_c.getAkiObject();
+  var startTime = new Date().getTime();
+  a_button_c.updateAnimation = function() {
+    var msec_passed = new Date().getTime() - startTime;
+    // console.log(msec_passed);
+    this.x = 100 + (MAGIC_TIME - msec_passed)/5;
+    if (msec_passed >= MAGIC_TIME) {
+      gbox.trashObject(this);
     }
-    a_button_c.blit = function() {
-      akiba.magic.standard_blit.call(a_button_c);
-    }
+  }
+  a_button_c.blit = function() {
+    akiba.magic.standard_blit.call(a_button_c);
+  }
 
-    if (type === 'z') {
-      a_button_c.y = 335;
-    } else if (type === 'x') {
-      a_button_c.y = 365;
-    } else if (type === 'c') {
-      a_button_c.y = 395;
-    } else if (type === 'v') {
-      a_button_c.y = 425;
-    }
-    a_button_c.x = 100;
-    a_button_c.id = 'button_' + type + num++;
+  if (type === 'z') {
+    a_button_c.y = 335;
+  } else if (type === 'x') {
+    a_button_c.y = 365;
+  } else if (type === 'c') {
+    a_button_c.y = 395;
+  } else if (type === 'v') {
+    a_button_c.y = 425;
+  }
+  a_button_c.x = 100;
+  a_button_c.id = 'button_' + type + num++;
 
-    gbox.addObject(a_button_c);
-  }, delay);
+  gbox.addObject(a_button_c);
 }
 
 function makeFightScreen(name, options) {

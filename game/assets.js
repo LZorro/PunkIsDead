@@ -27,14 +27,11 @@ function getImageResources(){
       ['button_z',             'images/buttons/button_z.png'],
       ['background_tilesheet', 'images/bg1.png']
     ];
-  if($config.use_plugins){
-//    imageResources = [];
-    for(var plugin in pluginHelper.loadedPlugins) {
-      if (pluginHelper.loadedPlugins[plugin].sprites) {
-        jQuery.merge(imageResources,pluginHelper.loadedPlugins[plugin].sprites);
-      }
-    }
-  }
+
+  _(['pixxie', 'teeny', 'dmann']).each(function(name) {
+    imageResources.push(['decibel_meter_' + name, 'images/decibel_meters/' + name + 'decibelmeter.png']);
+  });
+
   return imageResources;
 }
 
@@ -247,6 +244,14 @@ function getTileResources(){
       }
     }
   }
+  _(['pixxie', 'teeny', 'dmann']).each(function(name) {
+    tileResources.push({
+      id:    'decibel_meter_' + name,
+      image: 'decibel_meter_' + name,
+      tilew: 289,
+      tileh: 111
+    });
+  });
   return tileResources;
 }
 
