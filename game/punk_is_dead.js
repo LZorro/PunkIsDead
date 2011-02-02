@@ -8,7 +8,12 @@ var PunkIsDead = Game.extend({
 
     help.akihabaraInit({ width: 640, height: 480, zoom: 1, title: (getURLParam('name') ? getURLParam('name') : 'Punk Is Dead') });
 
-    gbox.addBundle({ file: timestampedURL('bundle.js') });
+    gbox.readBundleData({
+      addImage: getImageResources(),
+      addFont:  getFontResources(),
+      addTiles: getTileResources(),
+      addAudio: getAudioResources()
+    }, { onLoad: null });
 
     $aki.controls.watchKeys({
       SPACE: function() {
