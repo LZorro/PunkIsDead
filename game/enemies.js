@@ -4,7 +4,6 @@ var Foe = PlatformPerson.extend({
   init: function(options) {
     options.aki_attributes = _.extend({
       group:   'enemies',
-      tileset: 'enemy_1_set',
       hitByPlayer: function() {
         // $listener.inform(the_game.player_one, 'started battle', this);
 

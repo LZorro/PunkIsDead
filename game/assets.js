@@ -1,23 +1,22 @@
 function getImageResources(){
   var imageResources =
     [
-      ['font',                 'images/CasualEncounter.png'],
+      ['font',                 'images/fonts/CasualEncounter.png'],
       ['logo',                 'images/logo.png'],
-      ['player_sprite',        'images/walk.png'],
-      ['map_spritesheet',      'images/map_pieces.png'],
-      ['enemy_sprite',         'images/enemy_sprite.png'],
-      ['enemy_sprite1',        'images/enemy_sprite1.png'],
-      ['enemy_sprite2',        'images/enemy_sprite2.png'],
-      ['enemy_sprite3',        'images/enemy_sprite3.png'],
-      ['city_background',      'images/city_background.png'],
+      ['pixie_walking',        'images/characters/pixxie_walking.png'],
+      ['map_spritesheet',      'images/decals/map_pieces.png'],
+      ['enemy_sprite_teeny',   'images/characters/enemy_sprite_teeny.png'],
+      ['enemy_sprite_poser',   'images/characters/enemy_sprite_poser.png'],
+      ['enemy_sprite_dmann',   'images/characters/enemy_sprite_dmann.png'],
+      ['city_background',      'images/backgrounds/city_background.png'],
       ['fight_background_1',   'images/battlescreens/poserbs.png'],
       ['fight_background_2',   'images/battlescreens/dmannbs.png'],
       ['fight_background_3',   'images/battlescreens/teenybs.png'],
-      ['screen_splash',        'images/titlescreen.png'],
-      ['screen_tutorial',      'images/tutorial.png'],
-      ['screen_win',           'images/win.png'],
-      ['screen_lose',          'images/lose.png'],
-      ['pixie_battle',         'images/characters/pixie_battle.png'],
+      ['screen_splash',        'images/screens/titlescreen.png'],
+      ['screen_tutorial',      'images/screens/tutorial.png'],
+      ['screen_win',           'images/screens/win.png'],
+      ['screen_lose',          'images/screens/lose.png'],
+      ['pixie_battle',         'images/characters/pixxie_battle.png'],
       ['status_msg_rock',      'images/decals/status_rock.png'],
       ['status_msg_wait',      'images/decals/status_wait.png']
     ];
@@ -46,35 +45,28 @@ function getTileResources() {
     },
     {
       id:      'player_tiles',
-      image:   'player_sprite',
+      image:   'pixie_walking',
       tileh:   64,
       tilew:   32,
       tilerow: 10
     },
     {
-      id:      'enemy_1_set',
-      image:   'enemy_sprite1',
-      tileh:   64,
-      tilew:   32,
-      tilerow: 5
-    },
-    {
       id:      'enemy_teeny',
-      image:   'enemy_sprite1',
+      image:   'enemy_sprite_teeny',
       tileh:   64,
       tilew:   32,
       tilerow: 5
     },
     {
       id:      'enemy_poser',
-      image:   'enemy_sprite2',
+      image:   'enemy_sprite_poser',
       tileh:   64,
       tilew:   32,
       tilerow: 5
     },
     {
       id:      'enemy_dmann',
-      image:   'enemy_sprite3',
+      image:   'enemy_sprite_dmann',
       tileh:   64,
       tilew:   32,
       tilerow: 5
