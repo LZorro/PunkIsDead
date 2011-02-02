@@ -153,10 +153,72 @@ function makeFightScreen(name, options) {
     x: 205,
     y: 0,
     blit: function() {
-      if (this.fight.visible()) { akiba.magic.standard_blit.call(this); }
+      if (this.fight.visible()) {
+        akiba.magic.standard_blit.call(this);
+
+        gbox.blitRect(gbox.getBufferContext(), {
+          x: 260,
+          y: 325 - 80,
+          w: 120,
+          h: 80,
+          color: 'rgb(255,255,255)'
+        });
+      }
     }
   });
   gbox.addObject(fight_screen.enemy_decibel_meter);
+
+  fight_screen.pixxie_health_meter = createTopDown({
+    id:      'energy_meter_pixxie' + '_vs_' + name,
+    fight:   fight_screen,
+    tileset: 'energy_meter_pixxie',
+    group:   'buttons',
+    x: 0,
+    y: 290,
+    blit: function() {
+      if (this.fight.visible()) {
+        var energy_percent = the_game.player.health;
+        var energy_width_full = 100;
+        var energy_width = Math.floor(energy_width_full * energy_percent/100);
+        akiba.magic.standard_blit.call(this);
+
+        gbox.blitRect(gbox.getBufferContext(), {
+          x: this.x + 15,
+          y: this.y + 22,
+          w: energy_width,
+          h: 8,
+          // color: 'rgb(125,0,50)'
+          color: 'rgb(186, 11, 79)'
+        });
+      }
+    }
+  });
+  gbox.addObject(fight_screen.pixxie_health_meter);
+
+  fight_screen.enemy_health_meter = createTopDown({
+    id:      'energy_meter_' + name,
+    fight:   fight_screen,
+    tileset: 'energy_meter_' + name,
+    group:   'buttons',
+    x: 515,
+    y: 290,
+    blit: function() {
+      if (this.fight.visible()) {
+        var energy_width = 43;
+        var energy_width_full = 100;
+        akiba.magic.standard_blit.call(this);
+
+        gbox.blitRect(gbox.getBufferContext(), {
+          x: this.x + energy_width_full - energy_width + 3,
+          y: this.y + 22,
+          w: energy_width,
+          h: 8,
+          color: 'rgb(255,255,255)'
+        });
+      }
+    }
+  });
+  gbox.addObject(fight_screen.enemy_health_meter);
 
   the_game.fight_screens[name] = fight_screen;
 

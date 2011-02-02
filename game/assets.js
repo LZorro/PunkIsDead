@@ -21,6 +21,7 @@ function getImageResources(){
 
   _(['pixxie', 'poser', 'teeny', 'dmann']).each(function(name) {
     imageResources.push(['decibel_meter_' + name, 'images/decibel_meters/' + name + 'decibelmeter.png']);
+    imageResources.push(['energy_meter_' + name, 'images/energy_meters/' + name + 'energy.png']);
   });
 
   _(['c', 'v', 'x', 'z']).each(function(name) {
@@ -162,6 +163,12 @@ function getTileResources() {
       image: 'decibel_meter_' + name,
       tilew: 216,
       tileh: 83
+    });
+    tileResources.push({
+      id:    'energy_meter_' + name,
+      image: 'energy_meter_' + name,
+      tilew: 122,
+      tileh: 43
     });
   });
 
