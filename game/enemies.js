@@ -15,6 +15,29 @@ var Foe = PlatformPerson.extend({
 
     this._super(options);
 
+    this.aki_obj.animList = {
+      normal: { speed: 8, frames: [0, 1] },
+      hurt:   { speed: 8, frames: [2]    },
+      punk:   { speed: 8, frames: [3]    }
+    }
+    this.aki_obj.animIndex = 'normal';
+
+    var that = this;
+    this.aki_obj.otherAnimationUpdates = function() {
+      if (the_game.player && gbox.objectIsVisible(the_game.player) && gbox.objectIsVisible(this) && gbox.collides(the_game.player, this, 1)) {
+        if (the_game.player.initialized) {
+          if (!this.in_battle) {
+            that.startBattle();
+          }
+          this.animIndex = 'hurt';
+        }
+      } else if (this.converted) {
+        this.animIndex = 'punk';
+      } else {
+        this.animIndex = 'normal';
+      }
+    }
+
     this.battle = new Battle({ foe: this });
   },
 
@@ -49,30 +72,7 @@ function makeFoe(character_name, params) {
     }
   });
 
-  var aki = new_foe.getAkiObject();
-  aki.animList = {
-    normal: { speed: 8, frames: [0, 1] },
-    hurt:   { speed: 8, frames: [2]    },
-    punk:   { speed: 8, frames: [3]    }
-  }
-  aki.animIndex = 'normal';
-
-  aki.otherAnimationUpdates = function() {
-    if (gbox.getObject("player","player_id") && gbox.objectIsVisible(the_game.player) && gbox.objectIsVisible(this) && gbox.collides(the_game.player, this, 1)) {
-      if (the_game.player.initialized) {
-        if (!this.in_battle) {
-          new_foe.startBattle();
-        }
-        this.animIndex = 'hurt';
-      }
-    } else if (this.converted) {
-      this.animIndex = 'punk';
-    } else {
-      this.animIndex = 'normal';
-    }
-  }
-
-  gbox.addObject(aki);
+  gbox.addObject(new_foe.aki());
 
   the_game.foes[character_name] = new_foe;
 

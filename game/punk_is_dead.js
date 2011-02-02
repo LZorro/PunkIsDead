@@ -46,8 +46,8 @@ var PunkIsDead = Game.extend({
     the_game.battle_system = addBattleManager();
 
     makeFoe('teeny', { x: 200, y: 256 });
-    makeFoe('poser', { x: 300, y: 256 });
-    makeFoe('dmann',   { x: 400, y: 256 });
+    makeFoe('poser', { x: 600, y: 256 });
+    makeFoe('dmann', { x: 1000, y: 256 });
 
     makeMainScreen('intro');
     makeMainScreen('tutorial');
