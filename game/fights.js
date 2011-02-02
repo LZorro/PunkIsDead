@@ -118,14 +118,16 @@ function spawnNote(type, options) {
     akiba.magic.standard_blit.call(a_button_c);
   }
 
+  var note_top = 355;
+  var inc = 28;
   if (type === 'z') {
-    a_button_c.y = 335;
+    a_button_c.y = note_top;
   } else if (type === 'x') {
-    a_button_c.y = 365;
+    a_button_c.y = note_top + inc;
   } else if (type === 'c') {
-    a_button_c.y = 395;
+    a_button_c.y = note_top + inc*2;
   } else if (type === 'v') {
-    a_button_c.y = 425;
+    a_button_c.y = note_top + inc*3;
   }
   a_button_c.x = 100;
   a_button_c.id = 'button_' + type + num++;
@@ -142,7 +144,8 @@ function makeFightScreen(name, options) {
       id:      options.id      || 'fight_' + name,
       tileset: options.tileset || 'fight_background_' + name
     },
-    name: name
+    name: name,
+    foe:  the_game.foes[name]
   });
 
   fight_screen.enemy_decibel_meter = createTopDown({
@@ -158,10 +161,10 @@ function makeFightScreen(name, options) {
 
         gbox.blitRect(gbox.getBufferContext(), {
           x: 260,
-          y: 325 - 80,
+          y: 285 - 80,
           w: 120,
           h: 80,
-          color: 'rgb(255,255,255)'
+          color: 'rgb(34,255,4)'
         });
       }
     }
@@ -220,6 +223,43 @@ function makeFightScreen(name, options) {
   });
   gbox.addObject(fight_screen.enemy_health_meter);
 
+  gbox.addObject(createFrom(fight_screen.foe.aki(), {
+    id:    'dopple_' + name,
+    x:     605,
+    y:     410,
+    fight: fight_screen,
+    group: 'buttons',
+    blit: function() {
+      if (this.fight.visible()) {
+        akiba.magic.standard_blit.call(this);
+      }
+    }
+  }));
+
+  gbox.addObject(createFrom(fight_screen.foe.aki(), {
+    id:      'dopple_pixxie' + '_vs_' + name,
+    x:       10,
+    y:       410,
+    fight:   fight_screen,
+    group:   'buttons',
+    tileset: 'pixie_battle',
+    blit: function() {
+      if (this.fight.visible()) { akiba.magic.standard_blit.call(this); }
+    }
+  }));
+
+  gbox.addObject(createTopDown({
+    id:      'status_msg_rock' + '_' + name,
+    x:       240,
+    y:       288,
+    fight:   fight_screen,
+    group:   'buttons',
+    tileset: 'status_msg_rock',
+    blit: function() {
+      if (this.fight.visible()) { akiba.magic.standard_blit.call(this); }
+    }
+  }));
+
   the_game.fight_screens[name] = fight_screen;
 
   gbox.addObject(fight_screen.aki());
@@ -247,5 +287,10 @@ function makeMainScreen(name, options) {
 createTopDown = function(attributes) {
   if (!attributes) { attributes = {} }
 
-  return _(akiba.actors.top_down_object).chain().clone().extend(attributes).value();
+  // return _(akiba.actors.top_down_object).chain().clone().extend(attributes).value();
+  return createFrom(akiba.actors.top_down_object, attributes);
+}
+
+createFrom = function(source, target) {
+  return _(source).chain().clone().extend(target).value();
 }

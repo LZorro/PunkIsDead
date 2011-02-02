@@ -10,13 +10,16 @@ function getImageResources(){
       ['enemy_sprite2',        'images/enemy_sprite2.png'],
       ['enemy_sprite3',        'images/enemy_sprite3.png'],
       ['city_background',      'images/city_background.png'],
-      ['fight_background_1',    'images/battlescreens/poserbs.png'],
-      ['fight_background_2',    'images/battlescreens/dmannbs.png'],
-      ['fight_background_3',    'images/battlescreens/teenybs.png'],
+      ['fight_background_1',   'images/battlescreens/poserbs.png'],
+      ['fight_background_2',   'images/battlescreens/dmannbs.png'],
+      ['fight_background_3',   'images/battlescreens/teenybs.png'],
       ['screen_splash',        'images/titlescreen.png'],
       ['screen_tutorial',      'images/tutorial.png'],
       ['screen_win',           'images/win.png'],
-      ['screen_lose',          'images/lose.png']
+      ['screen_lose',          'images/lose.png'],
+      ['pixie_battle',         'images/characters/pixie_battle.png'],
+      ['status_msg_rock',      'images/decals/status_rock.png'],
+      ['status_msg_wait',      'images/decals/status_wait.png']
     ];
 
   _(['pixxie', 'poser', 'teeny', 'dmann']).each(function(name) {
@@ -154,6 +157,27 @@ function getTileResources() {
       image:   'button_z',
       tilew:   32,
       tileh:   32
+    },
+    {
+      id:      'pixie_battle',
+      image:   'pixie_battle',
+      tilew:   32,
+      tileh:   64,
+      tilerow: 2
+    },
+    {
+      id:      'status_msg_rock',
+      image:   'status_msg_rock',
+      tilew:   171,
+      tileh:   44,
+      tilerow: 1
+    },
+    {
+      id:      'status_msg_wait',
+      image:   'status_msg_wait',
+      tilew:   171,
+      tileh:   44,
+      tilerow: 1
     }
   ];
 
