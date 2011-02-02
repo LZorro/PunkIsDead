@@ -19,7 +19,7 @@ function getImageResources(){
       ['screen_lose',          'images/lose.png']
     ];
 
-  _(['pixxie', 'teeny', 'dmann']).each(function(name) {
+  _(['pixxie', 'poser', 'teeny', 'dmann']).each(function(name) {
     imageResources.push(['decibel_meter_' + name, 'images/decibel_meters/' + name + 'decibelmeter.png']);
   });
 
@@ -55,21 +55,21 @@ function getTileResources() {
       tilerow: 5
     },
     {
-      id:      'enemy_sarah',
+      id:      'enemy_teeny',
       image:   'enemy_sprite1',
       tileh:   64,
       tilew:   32,
       tilerow: 5
     },
     {
-      id:      'enemy_chris',
+      id:      'enemy_poser',
       image:   'enemy_sprite2',
       tileh:   64,
       tilew:   32,
       tilerow: 5
     },
     {
-      id:      'enemy_joe',
+      id:      'enemy_dmann',
       image:   'enemy_sprite3',
       tileh:   64,
       tilew:   32,
@@ -89,19 +89,19 @@ function getTileResources() {
       tilerow: 14
     },
     {
-      id:      'fight_background_chris',
+      id:      'fight_background_poser',
       image:   'fight_background_1',
       tilew:   640,
       tileh:   480
     },
     {
-      id:      'fight_background_joe',
+      id:      'fight_background_dmann',
       image:   'fight_background_2',
       tilew:   640,
       tileh:   480
     },
     {
-      id:      'fight_background_sarah',
+      id:      'fight_background_teeny',
       image:   'fight_background_3',
       tilew:   640,
       tileh:   480
@@ -156,12 +156,12 @@ function getTileResources() {
     }
   ];
 
-  _(['pixxie', 'teeny', 'dmann']).each(function(name) {
+  _(['pixxie', 'poser', 'teeny', 'dmann']).each(function(name) {
     tileResources.push({
       id:    'decibel_meter_' + name,
       image: 'decibel_meter_' + name,
-      tilew: 289,
-      tileh: 111
+      tilew: 216,
+      tileh: 83
     });
   });
 

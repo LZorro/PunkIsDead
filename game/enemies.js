@@ -25,16 +25,16 @@ var Foe = PlatformPerson.extend({
 });
 
 characters = {
-  sarah: {
-    tileset: 'enemy_sarah'
+  teeny: {
+    tileset: 'enemy_teeny'
   },
 
-  chris: {
-    tileset: 'enemy_chris'
+  poser: {
+    tileset: 'enemy_poser'
   },
 
-  joe: {
-    tileset: 'enemy_joe'
+  dmann: {
+    tileset: 'enemy_dmann'
   }
 }
 

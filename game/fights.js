@@ -1,3 +1,5 @@
+var g_notes = [];
+
 var Screen = Klass.extend({
   init: function(options) {
     if (!options) options = {};
@@ -71,16 +73,13 @@ var Battle = Klass.extend({
     gbox.playAudio('bgmix', 'bgmix');
     gbox.playAudio('bggtr', 'bggtr');
     battle_manager.start();
-
-    console.log('audio: ' + gbox.getAudioDuration('bgmix'));
-    console.log('fps: ' + gbox.getFps());
   },
 
   end: function() {
     gbox.stopAudio('bgmix');
     gbox.stopAudio('bggtr');
     the_game.endBattle();
-    gbox.trashGroup('buttons');
+    _(g_notes).each(function(note) { gbox.trashObject(note); });
     _(this.noteQueue).each(function(timeout) { clearTimeout(timeout); });
     battle_manager.end();
   },
@@ -91,7 +90,7 @@ var Battle = Klass.extend({
       if (_(['c', 'v', 'z', 'x']).include(note_letter)) {
         this.noteQueue.push(setTimeout("spawnNote('" + note[1] + "', {})", (note[0] - 11) * 1000));
       }
-      debug.log(note[0], note_letter);
+      // debug.log(note[0], note_letter);
     }, this));
   }
 });
@@ -112,6 +111,7 @@ function spawnNote(type, options) {
     this.x = 100 + (MAGIC_TIME - msec_passed)/5;
     if (msec_passed >= MAGIC_TIME) {
       gbox.trashObject(this);
+      g_notes = _(g_notes).without(this);
     }
   }
   a_button_c.blit = function() {
@@ -130,6 +130,7 @@ function spawnNote(type, options) {
   a_button_c.x = 100;
   a_button_c.id = 'button_' + type + num++;
 
+  g_notes.push(a_button_c);
   gbox.addObject(a_button_c);
 }
 
@@ -145,11 +146,15 @@ function makeFightScreen(name, options) {
   });
 
   fight_screen.enemy_decibel_meter = createTopDown({
-    fight:   this,
-    tileset: 'decibel_meter_pixxie',
-    group:   'fights',
-    x: 100,
-    y: 100
+    id:      'fight_screen_decibel_meter_' + name,
+    fight:   fight_screen,
+    tileset: 'decibel_meter_' + name,
+    group:   'buttons',
+    x: 205,
+    y: 0,
+    blit: function() {
+      if (this.fight.visible()) { akiba.magic.standard_blit.call(this); }
+    }
   });
   gbox.addObject(fight_screen.enemy_decibel_meter);
 
