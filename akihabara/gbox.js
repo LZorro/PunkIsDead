@@ -1164,6 +1164,12 @@ var gbox={
   * <li>gapy {Integer}: y-coord gap between tile rows, in pixels</li></ul>
   */
 	addTiles:function(t) { 
+	  help.mergeWithModel(t, {
+	    tilerow: 1,
+	    gapx:    0,
+	    gapy:    0
+	  });
+
 		t.tilehh=Math.floor(t.tileh/2);
 		t.tilehw=Math.floor(t.tilew/2);
 		this._tiles[t.id]=t;

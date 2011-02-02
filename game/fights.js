@@ -13,7 +13,7 @@ var Screen = Klass.extend({
       actor: this
     }, options.aki_attributes || {});
 
-    this.aki_obj = _(akiba.actors.top_down_object).chain().clone().extend(this.aki_attributes).value();
+    this.aki_obj = createTopDown(this.aki_attributes);
 
     this.id = this.aki_attributes.id;
     this.name = this.name || this.id;
@@ -35,9 +35,13 @@ var Button = Klass.extend({
     if (!options) options = {};
 
     this.game = the_game;
+    _(this).extend(options);
+
     this.aki_attributes = _.extend({
       group:   'buttons'
     }, options.aki_attributes || {});
+
+    this.aki_obj = createTopDown(this.aki_attributes);
 
     this.id = this.aki_attributes.id;
   },
@@ -140,6 +144,15 @@ function makeFightScreen(name, options) {
     name: name
   });
 
+  fight_screen.enemy_decibel_meter = createTopDown({
+    fight:   this,
+    tileset: 'decibel_meter_pixxie',
+    group:   'fights',
+    x: 100,
+    y: 100
+  });
+  gbox.addObject(fight_screen.enemy_decibel_meter);
+
   the_game.fight_screens[name] = fight_screen;
 
   gbox.addObject(fight_screen.aki());
@@ -162,4 +175,10 @@ function makeMainScreen(name, options) {
   the_game['main_screen_' + name] = screen;
 
   gbox.addObject(screen.aki());
+}
+
+createTopDown = function(attributes) {
+  if (!attributes) { attributes = {} }
+
+  return _(akiba.actors.top_down_object).chain().clone().extend(attributes).value();
 }
