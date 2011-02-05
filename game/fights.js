@@ -62,6 +62,7 @@ var Battle = Klass.extend({
 
     this.foe = options.foe;
     this.noteQueue = [];
+    this.powerLevel = 0;
   },
 
   start: function() {
@@ -72,6 +73,9 @@ var Battle = Klass.extend({
 
     gbox.playAudio('bgmix', 'bgmix');
     gbox.playAudio('bggtr', 'bggtr');
+    battle_manager.successFunc = $.proxy(function(data) {
+      this.updateDecibelMeter(data.powerLevel);
+    }, this);
     battle_manager.start();
   },
 
@@ -82,6 +86,11 @@ var Battle = Klass.extend({
     _(g_notes).each(function(note) { gbox.trashObject(note); });
     _(this.noteQueue).each(function(timeout) { clearTimeout(timeout); });
     battle_manager.end();
+  },
+
+  updateDecibelMeter: function(power_level) {
+    var num_power_bars = Math.floor(power_level/10);
+    this.powerLevel = num_power_bars;
   },
 
   playNotes: function() {
@@ -95,12 +104,13 @@ var Battle = Klass.extend({
   }
 });
 
-MAGIC_TIME = 2300 //1900
+MAGIC_TIME = 3300 //1900
 var num = 1;
 function spawnNote(type, options) {
   the_game.button_c = new Button({ aki_attributes: _({
     id:      options.id,
-    tileset: 'button_' + type
+    tileset: 'button_' + type,
+    missed:  false
   }).extend(options.aki_attributes || {})});
 
   var a_button_c = the_game.button_c.aki();
@@ -108,10 +118,15 @@ function spawnNote(type, options) {
   a_button_c.updateAnimation = function() {
     var msec_passed = new Date().getTime() - startTime;
     // console.log(msec_passed);
-    this.x = 100 + (MAGIC_TIME - msec_passed)/5;
+    this.x = 30 + (MAGIC_TIME - msec_passed)/5;
     if (msec_passed >= MAGIC_TIME) {
       gbox.trashObject(this);
       g_notes = _(g_notes).without(this);
+    } else if (msec_passed >= (MAGIC_TIME - 300)) {
+      if (!this.missed) {
+        this.missed = true;
+        this.tileset = 'button_miss';
+      }
     }
   }
   a_button_c.blit = function() {
@@ -159,44 +174,60 @@ function makeFightScreen(name, options) {
       if (this.fight.visible()) {
         akiba.magic.standard_blit.call(this);
 
-        gbox.blitRect(gbox.getBufferContext(), {
-          x: 260,
-          y: 285 - 80,
-          w: 120,
-          h: 80,
-          color: 'rgb(34,255,4)'
-        });
+        // gbox.blitRect(gbox.getBufferContext(), {
+        //   x: 260,
+        //   y: 285 - 80,
+        //   w: 120,
+        //   h: 80,
+        //   color: 'rgb(34,255,4)'
+        // });
       }
     }
   });
   gbox.addObject(fight_screen.enemy_decibel_meter);
 
-  fight_screen.pixxie_health_meter = createTopDown({
-    id:      'energy_meter_pixxie' + '_vs_' + name,
-    fight:   fight_screen,
-    tileset: 'energy_meter_pixxie',
-    group:   'buttons',
-    x: 0,
-    y: 290,
-    blit: function() {
-      if (this.fight.visible()) {
-        var energy_percent = the_game.player.health;
-        var energy_width_full = 100;
-        var energy_width = Math.floor(energy_width_full * energy_percent/100);
-        akiba.magic.standard_blit.call(this);
-
-        gbox.blitRect(gbox.getBufferContext(), {
-          x: this.x + 15,
-          y: this.y + 22,
-          w: energy_width,
-          h: 8,
-          // color: 'rgb(125,0,50)'
-          color: 'rgb(186, 11, 79)'
-        });
+  fight_screen.enemy_decibel_bars = [];
+  _(_.range(1, 8)).each(function(bar_i) {
+    fight_screen.enemy_decibel_bars.push(createTopDown({
+      id:      'fight_screen_decibel_meter_' + name + '_num_' + bar_i,
+      fight:   fight_screen,
+      tileset: 'decibel_meter_bar_' + bar_i,
+      group:   'buttons',
+      x: 256,
+      y: 290 - (25 + 5)*bar_i,
+      blit: function() {
+        if (this.fight.visible() && the_game.currentBattle.powerLevel >= 10*bar_i) { akiba.magic.standard_blit.call(this); }
       }
-    }
+    }));
+    gbox.addObject(_(fight_screen.enemy_decibel_bars).last());
   });
-  gbox.addObject(fight_screen.pixxie_health_meter);
+
+  // fight_screen.pixxie_health_meter = createTopDown({
+  //   id:      'energy_meter_pixxie' + '_vs_' + name,
+  //   fight:   fight_screen,
+  //   tileset: 'energy_meter_pixxie',
+  //   group:   'buttons',
+  //   x: 0,
+  //   y: 290,
+  //   blit: function() {
+  //     if (this.fight.visible()) {
+  //       var energy_percent = the_game.player.health;
+  //       var energy_width_full = 100;
+  //       var energy_width = Math.floor(energy_width_full * energy_percent/100);
+  //       akiba.magic.standard_blit.call(this);
+  // 
+  //       gbox.blitRect(gbox.getBufferContext(), {
+  //         x: this.x + 15,
+  //         y: this.y + 22,
+  //         w: energy_width,
+  //         h: 8,
+  //         // color: 'rgb(125,0,50)'
+  //         color: 'rgb(186, 11, 79)'
+  //       });
+  //     }
+  //   }
+  // });
+  // gbox.addObject(fight_screen.pixxie_health_meter);
 
   fight_screen.enemy_health_meter = createTopDown({
     id:      'energy_meter_' + name,
@@ -207,7 +238,7 @@ function makeFightScreen(name, options) {
     y: 290,
     blit: function() {
       if (this.fight.visible()) {
-        var energy_width = 43;
+        var energy_width = 73;
         var energy_width_full = 100;
         akiba.magic.standard_blit.call(this);
 

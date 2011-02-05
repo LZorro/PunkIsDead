@@ -26,8 +26,12 @@ function getImageResources(){
     imageResources.push(['energy_meter_' + name, 'images/energy_meters/' + name + 'energy.png']);
   });
 
-  _(['c', 'v', 'x', 'z']).each(function(name) {
+  _(['c', 'v', 'x', 'z', 'hit', 'miss']).each(function(name) {
     imageResources.push(['button_' + name, 'images/buttons/button_' + name + '.png']);
+  });
+
+  _(_.range(1, 8)).each(function(i) {
+    imageResources.push(['decibelmeter_' + i, 'images/decibel_meters/decibelmeter_' + i + '.png']);
   });
 
   return imageResources;
@@ -127,30 +131,6 @@ function getTileResources() {
       tileh:   480
     },
     {
-      id:      'button_c',
-      image:   'button_c',
-      tilew:   32,
-      tileh:   32
-    },
-    {
-      id:      'button_v',
-      image:   'button_v',
-      tilew:   32,
-      tileh:   32
-    },
-    {
-      id:      'button_x',
-      image:   'button_x',
-      tilew:   32,
-      tileh:   32
-    },
-    {
-      id:      'button_z',
-      image:   'button_z',
-      tilew:   32,
-      tileh:   32
-    },
-    {
       id:      'pixie_battle',
       image:   'pixie_battle',
       tilew:   32,
@@ -171,6 +151,15 @@ function getTileResources() {
     }
   ];
 
+  _(['c', 'v', 'x', 'z', 'hit', 'miss']).each(function(name) {
+    tileResources.push({
+      id:      'button_' + name,
+      image:   'button_' + name,
+      tilew:   32,
+      tileh:   32
+    });
+  });
+
   _(['pixxie', 'poser', 'teeny', 'dmann']).each(function(name) {
     tileResources.push({
       id:    'decibel_meter_' + name,
@@ -186,6 +175,16 @@ function getTileResources() {
     });
   });
 
+  _(_.range(1, 8)).each(function(i) {
+    tileResources.push({
+      id:    'decibel_meter_bar_' + i,
+      image: 'decibelmeter_' + i,
+      tilew: 126,
+      tileh: 25
+    });
+  });
+
+  g_tileResources = tileResources;
   return tileResources;
 }
 
