@@ -86,9 +86,9 @@ var Battle = Klass.extend({
 
   playNotes: function() {
     _(battle_manager.song_data).each(_.bind(function(note) {
-      var note_letter = note[1];
+      var note_letter = note[1], note_seconds_into_song = note[0];
       if (_(['c', 'v', 'z', 'x']).include(note_letter)) {
-        this.noteQueue.push(setTimeout("spawnNote('" + note[1] + "', {})", (note[0] - 11) * 1000));
+        this.noteQueue.push(setTimeout("spawnNote('" + note_letter + "', {})", note_seconds_into_song * 1000));
       }
       // debug.log(note[0], note_letter);
     }, this));
