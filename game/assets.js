@@ -18,7 +18,8 @@ function getImageResources(){
       ['screen_lose',          'images/screens/lose.png'],
       ['pixie_battle',         'images/characters/pixxie_battle.png'],
       ['status_msg_rock',      'images/decals/status_rock.png'],
-      ['status_msg_wait',      'images/decals/status_wait.png']
+      ['status_msg_wait',      'images/decals/status_wait.png'],
+      ['hurt_pixxie',          'images/characters/hurtpixxie_uno_sm.png']
     ];
 
   _(['pixxie', 'poser', 'teeny', 'dmann']).each(function(name) {
@@ -148,6 +149,12 @@ function getTileResources() {
       image:   'status_msg_wait',
       tilew:   171,
       tileh:   44
+    },
+    {
+      id:      'hurt_pixxie',
+      image:   'hurt_pixxie',
+      tilew:   315,
+      tileh:   412
     }
   ];
 

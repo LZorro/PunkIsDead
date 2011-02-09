@@ -49,10 +49,36 @@ var Button = Klass.extend({
   },
 
   aki: function() {
-    var obj = _(this.aki_attributes).extend(akiba.actors.top_down_object);
+    return this.aki_obj;
+  }
+});
 
-    this.aki_obj = obj;
-    return obj;
+var Note = Button.extend({
+  init: function(options) {
+    if (!options) options = {};
+
+    this._super(options);
+    this.startTime = new Date().getTime();
+    var that = this;
+
+    _.extend(this.aki_obj, {
+      tileset: 'button_' + options.type,
+      missed:  false,
+      updateAnimation: function() {
+        var msec_passed = new Date().getTime() - that.startTime;
+        // console.log(msec_passed);
+        this.x = 30 + (MAGIC_TIME - msec_passed)/5;
+        if (msec_passed >= MAGIC_TIME) {
+          gbox.trashObject(this);
+          g_notes = _(g_notes).without(this);
+        } else if (msec_passed >= (MAGIC_TIME - 300)) {
+          if (!this.missed) {
+            this.missed = true;
+            this.tileset = 'button_miss';
+          }
+        }
+      }
+    });
   }
 });
 
@@ -107,31 +133,11 @@ var Battle = Klass.extend({
 MAGIC_TIME = 3300 //1900
 var num = 1;
 function spawnNote(type, options) {
-  the_game.button_c = new Button({ aki_attributes: _({
-    id:      options.id,
-    tileset: 'button_' + type,
-    missed:  false
-  }).extend(options.aki_attributes || {})});
+  the_game.button_c = new Note({
+    type: type
+  });
 
   var a_button_c = the_game.button_c.aki();
-  var startTime = new Date().getTime();
-  a_button_c.updateAnimation = function() {
-    var msec_passed = new Date().getTime() - startTime;
-    // console.log(msec_passed);
-    this.x = 30 + (MAGIC_TIME - msec_passed)/5;
-    if (msec_passed >= MAGIC_TIME) {
-      gbox.trashObject(this);
-      g_notes = _(g_notes).without(this);
-    } else if (msec_passed >= (MAGIC_TIME - 300)) {
-      if (!this.missed) {
-        this.missed = true;
-        this.tileset = 'button_miss';
-      }
-    }
-  }
-  a_button_c.blit = function() {
-    akiba.magic.standard_blit.call(a_button_c);
-  }
 
   var note_top = 355;
   var inc = 28;
