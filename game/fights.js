@@ -53,32 +53,52 @@ var Button = Klass.extend({
   }
 });
 
+g_num_notes = 1;
+T_NOTE_EXPIRATION_MS = 3300
+
+g_deb_pwr = 0;
 var Note = Button.extend({
   init: function(options) {
     if (!options) options = {};
-
     this._super(options);
-    this.startTime = new Date().getTime();
-    var that = this;
+
+    var note = this;
 
     _.extend(this.aki_obj, {
-      tileset: 'button_' + options.type,
+      tileset: 'button_' + this.type,
       missed:  false,
       updateAnimation: function() {
-        var msec_passed = new Date().getTime() - that.startTime;
+        var msec_passed = new Date().getTime() - note.startTime;
         // console.log(msec_passed);
-        this.x = 30 + (MAGIC_TIME - msec_passed)/5;
-        if (msec_passed >= MAGIC_TIME) {
+        this.x = 30 + (T_NOTE_EXPIRATION_MS - msec_passed)/5;
+        if (msec_passed >= T_NOTE_EXPIRATION_MS) {
           gbox.trashObject(this);
           g_notes = _(g_notes).without(this);
-        } else if (msec_passed >= (MAGIC_TIME - 300)) {
+        } else if (msec_passed >= (T_NOTE_EXPIRATION_MS - 300)) {
           if (!this.missed) {
             this.missed = true;
             this.tileset = 'button_miss';
+            battle_manager.successFunc({ powerLevel: Math.min(100, g_deb_pwr += 10) });
           }
         }
       }
     });
+
+    var note_top = 355;
+    var inc = 28;
+    if (this.type === 'z') {
+      this.aki_obj.y = note_top;
+    } else if (this.type === 'x') {
+      this.aki_obj.y = note_top + inc;
+    } else if (this.type === 'c') {
+      this.aki_obj.y = note_top + inc*2;
+    } else if (this.type === 'v') {
+      this.aki_obj.y = note_top + inc*3;
+    }
+    this.aki_obj.x = 100;
+    this.aki_obj.id = 'button_' + this.type + g_num_notes++;
+
+    g_notes.push(this.aki_obj);
   }
 });
 
@@ -100,6 +120,7 @@ var Battle = Klass.extend({
     gbox.playAudio('bgmix', 'bgmix');
     gbox.playAudio('bggtr', 'bggtr');
     battle_manager.successFunc = $.proxy(function(data) {
+      console.log('success!', data);
       this.updateDecibelMeter(data.powerLevel);
     }, this);
     battle_manager.start();
@@ -115,6 +136,7 @@ var Battle = Klass.extend({
   },
 
   updateDecibelMeter: function(power_level) {
+    console.log('updateDecibelMeter', power_level);
     var num_power_bars = Math.floor(power_level/10);
     this.powerLevel = num_power_bars;
   },
@@ -130,31 +152,13 @@ var Battle = Klass.extend({
   }
 });
 
-MAGIC_TIME = 3300 //1900
-var num = 1;
 function spawnNote(type, options) {
   the_game.button_c = new Note({
-    type: type
+    type: type,
+    startTime: new Date().getTime()
   });
 
-  var a_button_c = the_game.button_c.aki();
-
-  var note_top = 355;
-  var inc = 28;
-  if (type === 'z') {
-    a_button_c.y = note_top;
-  } else if (type === 'x') {
-    a_button_c.y = note_top + inc;
-  } else if (type === 'c') {
-    a_button_c.y = note_top + inc*2;
-  } else if (type === 'v') {
-    a_button_c.y = note_top + inc*3;
-  }
-  a_button_c.x = 100;
-  a_button_c.id = 'button_' + type + num++;
-
-  g_notes.push(a_button_c);
-  gbox.addObject(a_button_c);
+  gbox.addObject(the_game.button_c.aki());
 }
 
 function makeFightScreen(name, options) {
