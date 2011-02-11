@@ -13,6 +13,7 @@ var Foe = PlatformPerson.extend({
     }, options.aki_attributes || {});
 
     this._super(options);
+    this.energy_level = 100;
 
     this.aki_obj.animList = {
       normal: { speed: 8, frames: [0, 1] },
@@ -38,6 +39,15 @@ var Foe = PlatformPerson.extend({
     }
 
     this.battle = new Battle({ foe: this });
+
+    $l.bind('attack_foe', $.proxy(function(event, data) {
+      if (this === data.foe) {
+        $m('foe_hurt');
+        this.energy_level = Math.max(this.energy_level - data.damage, 0);
+      } else {
+        $m('other_foe_hurt');
+      }
+    }, this));
   },
 
   startBattle: function() {
@@ -62,6 +72,7 @@ characters = {
 
 function makeFoe(character_name, params) {
   var new_foe = new Foe({
+    name: character_name,
     aki_attributes: {
       id:      'foe_' + character_name,
       game:    the_game,
